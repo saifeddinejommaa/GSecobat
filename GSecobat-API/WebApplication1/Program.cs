@@ -5,6 +5,8 @@ using GSecobat.Application;
 using GSecobat.Infrastructure;
 using GSocobat.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<GSecobatAppDbContext>(options =>
     options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+
+builder.Services.AddScoped<IDbConnection>(sp =>
+    new NpgsqlConnection(
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );

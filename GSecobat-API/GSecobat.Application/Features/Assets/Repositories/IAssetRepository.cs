@@ -1,6 +1,6 @@
 ﻿using GSecobat.Domain.Entities;
 
-namespace GSecobat.Application.Features.Assets
+namespace GSecobat.Application.Features.Assets.Repositories
 {
     public interface IAssetRepository
     {

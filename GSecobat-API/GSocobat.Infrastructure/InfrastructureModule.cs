@@ -1,11 +1,10 @@
-﻿
-using Autofac;
+﻿using Autofac;
 using GSocobat.Infrastructure;
 using GSocobat.Infrastructure.Repositories;
 
 namespace GSecobat.Infrastructure;
 
-public class InfrastructureModule : Autofac.Module
+public class InfrastructureModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

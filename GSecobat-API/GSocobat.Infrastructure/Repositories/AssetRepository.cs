@@ -1,4 +1,4 @@
-﻿using GSecobat.Application.Features.Assets;
+﻿using GSecobat.Application.Features.Assets.Repositories;
 using GSecobat.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

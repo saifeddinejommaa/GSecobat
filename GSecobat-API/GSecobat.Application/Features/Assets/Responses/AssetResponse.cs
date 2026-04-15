@@ -11,6 +11,6 @@ namespace GSecobat.Application.Features.Assets.Responses
         public int? FiscalHorsepower { get; set; }
         public string? TypeLabel { get; set; }
         public string? Mch { get; set; }
-        public int? AssetStatusLabel { get; set; }
+        public string? AssetStatusLabel { get; set; }
     }
 }

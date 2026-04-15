@@ -1,6 +1,8 @@
-﻿using GSecobat.Application.Features.Assets.Responses;
+﻿using GSecobat.Application.Features.Assets.Requests;
+using GSecobat.Application.Features.Assets.Responses;
 using GSecobat.Application.Features.Assets.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GSecobat.Api.Controllers
 {
@@ -14,10 +16,11 @@ namespace GSecobat.Api.Controllers
             _assetService = employeeService;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllEmployees()
+        [HttpGet("GetAll", Name = nameof(GetAllAssets))]
+        [ProducesResponseType(typeof(List<AssetResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllAssets([FromQuery] AssetsRequestFilter filter)
         {
-            List<AssetResponse> response = await _assetService.GetAllAssets();
+            List<AssetResponse> response = await _assetService.GetAllAssets(filter);
 
             return Ok(response);
         }
@@ -29,7 +32,7 @@ namespace GSecobat.Api.Controllers
 
             return Ok(response);
         }
-
+        /*
         [HttpGet("/serial_number/{serialNumber:string}/details")]
         public async Task<IActionResult> GetAssetBySerialNumber(string serialNumber)
         {
@@ -37,5 +40,6 @@ namespace GSecobat.Api.Controllers
 
             return Ok(response);
         }
+        */
     }
 }
