@@ -13,5 +13,6 @@ namespace GSocobat.Infrastructure
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }
