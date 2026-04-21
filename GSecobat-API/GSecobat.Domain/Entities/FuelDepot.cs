@@ -13,9 +13,9 @@ namespace GSecobat.Domain.Entities
 
         public string? DepotName { get; set; }
 
-        public int Capacity { get; set; }
+        public double Capacity { get; set; }
 
-        public int? CurrentLevel { get; set; }
+        public double CurrentLevel { get; set; }
 
         public string Reference { get; set; } = null!;
 

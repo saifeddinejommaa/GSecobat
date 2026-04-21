@@ -2,8 +2,10 @@
 using Autofac.Extensions.DependencyInjection;
 using GSecobat.Api.ApiResponse;
 using GSecobat.Application;
+using GSecobat.Application.Common;
 using GSecobat.Infrastructure;
 using GSocobat.Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Data;
@@ -36,6 +38,17 @@ builder.Services.AddScoped<IDbConnection>(sp =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+
+//MediatR
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddTransient(
+    typeof(IPipelineBehavior<,>),
+    typeof(RequestPipelineBehavior<,>));
+
+// Log config
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 

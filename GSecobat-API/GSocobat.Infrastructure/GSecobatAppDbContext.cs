@@ -14,5 +14,9 @@ namespace GSocobat.Infrastructure
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<FuelDepot> FuelDepots { get; set; }
+        public DbSet<FuelDepotReffil> DepotReffils { get; set; }
+        public DbSet<FuelAssetReffil> FuelAssetReffils { get; set; }
+
     }
 }

@@ -1,9 +1,7 @@
 using Dapper;
-using GSecobat.Application.Features;
-using GSecobat.Application.Features.Assets.Responses;
+using GSecobat.Application.Features.FuelDepots.Repositories;
 using GSecobat.Application.Features.FuelDepots.Requests;
 using GSecobat.Application.Features.FuelDepots.Responses;
-using GSecobat.Domain.Entities;
 using System.Data;
 using System.Text;
 

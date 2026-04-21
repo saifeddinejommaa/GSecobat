@@ -12,5 +12,6 @@ namespace GSecobat.Application.Features.Assets.Responses
         public string? TypeLabel { get; set; }
         public string? Mch { get; set; }
         public string? AssetStatusLabel { get; set; }
+        public double? CurrentFuelQuantity { get; set; }
     }
 }

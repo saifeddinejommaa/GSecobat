@@ -38,7 +38,16 @@ namespace GSocobat.Infrastructure.Repositories
         {
             List<Asset> assets = await _context.Assets.Where(asset => asset.AssetTypeId == assetTypeId)
                                                     .ToListAsync();
+
             return assets;
+        }
+
+        public async Task<bool> UpdateAsync(Asset entity)
+        {
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

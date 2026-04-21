@@ -11,5 +11,7 @@ namespace GSecobat.Application.Features.Assets.Repositories
         Task<Asset> GetAssetBySerialNumber(string serialNumber);
 
         Task<List<Asset>> GetAssetsByType(int assetTypeId);
+
+        Task<bool> UpdateAsync(Asset entity);
     }
 }

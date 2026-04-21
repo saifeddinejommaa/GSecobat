@@ -25,6 +25,7 @@ namespace GSocobat.Infrastructure.QueryRepositoryes
                     a."SerialNumber" {nameof(AssetResponse.SerialNumber)},
                     a."AssetTypeId" {nameof(AssetResponse.AssetTypeId)},
                     a."AssetStatusId" {nameof(AssetResponse.AssetStatusId)},
+                    a."CurrentFuelQuantity" {nameof(AssetResponse.CurrentFuelQuantity)},
                     a."FiscalHorsepower" {nameof(AssetResponse.FiscalHorsepower)},
                     t."TypeLabel" {nameof(AssetResponse.TypeLabel)},
                     s."StatusLabel" {nameof(AssetResponse.AssetStatusLabel)}
