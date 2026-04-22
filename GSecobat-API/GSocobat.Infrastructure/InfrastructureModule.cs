@@ -16,7 +16,7 @@ public class InfrastructureModule : Module
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
 
-        // 🔹 DbContext (exemple)
+        // 🔹 DbContext
         builder.RegisterType<GSecobatAppDbContext>()
             .AsSelf()
             .InstancePerLifetimeScope();

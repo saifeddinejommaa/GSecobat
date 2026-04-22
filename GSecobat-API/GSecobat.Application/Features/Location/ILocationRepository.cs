@@ -1,9 +1,9 @@
-﻿using GSecobat.Domain.Entities;
+﻿using GSecobat.Application.Common;
+using GSecobat.Domain.Entities;
 
 namespace GSecobat.Application.Features.Site
 {
-    public interface ILocationRepository
+    public interface ILocationRepository : IBaseRepository<Location>
     {
-        Task<List<Location>> GetAllAddress();
     }
 }

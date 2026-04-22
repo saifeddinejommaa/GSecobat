@@ -15,14 +15,14 @@ namespace GSecobat.Application.Features.Employees.Services
 
         public async Task<EmployeeResponse> GetEmployeeById(int id)
         {
-            Employee employee = await _employeeRepository.GetById(id);
+            Employee? employee = await _employeeRepository.GetByIdAsync(id);
 
             return employee.ToEmployeeResponse();
         }
 
         public async Task<List<EmployeeResponse>> GetEmployees()
         {
-            List<Employee> employeesResult = await _employeeRepository.GetAllAsync();
+            IEnumerable<Employee> employeesResult = await _employeeRepository.GetAllAsync();
             List<EmployeeResponse> result = employeesResult.Select(e => e.ToEmployeeResponse())
                                                     .ToList();
 

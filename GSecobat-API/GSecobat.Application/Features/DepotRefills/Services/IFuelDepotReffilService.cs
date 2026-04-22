@@ -2,8 +2,8 @@
 
 namespace GSecobat.Application.Features.DepotReffils.Services
 {
-    public interface IDepotReffilService
+    public interface IFuelDepotReffilService
     {
-        public Task<bool> ExecuteDepotReffil(DepotReffilRequest request);
+        public Task<bool> ExecuteDepotReffil(FuelDepotReffilRequest request);
     }
 }

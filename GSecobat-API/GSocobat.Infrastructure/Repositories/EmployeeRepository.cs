@@ -1,27 +1,38 @@
-﻿using GSecobat.Application.Features.Employees;
+﻿using GSecobat.Application.Common;
+using GSecobat.Application.Features.Employees;
 using GSecobat.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GSocobat.Infrastructure.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository(GSecobatAppDbContext context) : IEmployeeRepository
     {
-        private readonly GSecobatAppDbContext _context;
+        private readonly GSecobatAppDbContext _context = context;
 
-        public EmployeeRepository(GSecobatAppDbContext context)
+        public Task AddAsync(Employee entity)
         {
-            _context = context;
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Employee>> GetAllAsync()
+        public Task DeleteAsync(Employee entity)
         {
-            return await _context.Employees.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Employee> GetById(int id)
+        public async Task<Employee?> GetByIdAsync(int id)
         {
             return await _context.Employees.Where(emp => emp.Id == id)
-                                    .FirstAsync();
+                                     .FirstAsync();
+        }
+
+        public Task UpdateAsync(Employee entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await _context.Employees.ToListAsync();
         }
     }
 }

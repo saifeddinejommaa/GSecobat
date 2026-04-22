@@ -7,11 +7,10 @@ namespace GSecobat.Domain.Entities
     {
         public int Id { get; set; }
 
-        public int FuelDepotsId { get; set; }
+        public int FuelDepotId { get; set; }
 
         public DateTime ReffilDate { get; set; }
 
-        public double QuantityLiters { get; set; }
-
+        public double Quantity { get; set; }
     }
 }

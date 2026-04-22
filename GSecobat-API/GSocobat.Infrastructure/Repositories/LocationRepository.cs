@@ -13,9 +13,29 @@ namespace GSocobat.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<Location>> GetAllAddress()
+        public Task AddAsync(Location entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Location entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Location>> GetAllAsync()
         {
             return await _context.Locations.ToListAsync();
+        }
+
+        public Task<Location?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Location entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

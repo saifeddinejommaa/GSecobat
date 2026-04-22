@@ -1,7 +1,7 @@
-﻿using GSecobat.Application.Features.FuelAssetReffil.Services;
+﻿using GSecobat.Application.Features.AssetReffil.Services;
 using MediatR;
 
-namespace GSecobat.Application.Features.FuelAssetReffil.Requests
+namespace GSecobat.Application.Features.AssetReffil.Requests
 {
     public class FuelAssetReffilRequest : IRequest<bool>
     {
@@ -15,9 +15,9 @@ namespace GSecobat.Application.Features.FuelAssetReffil.Requests
 
     public class FuelAssetReffitRequestHandler : IRequestHandler<FuelAssetReffilRequest, bool>
     {
-        private readonly IFuelAssetReffilService _fuelAssetReffilService;
+        private readonly IFuelAssetRefillService _fuelAssetReffilService;
 
-        public FuelAssetReffitRequestHandler(IFuelAssetReffilService fuelAssetReffilService)
+        public FuelAssetReffitRequestHandler(IFuelAssetRefillService fuelAssetReffilService)
         {
             _fuelAssetReffilService = fuelAssetReffilService;
         }

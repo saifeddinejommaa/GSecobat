@@ -7,6 +7,5 @@ namespace GSecobat.Application.Features.Employees.Services
         Task<List<EmployeeResponse>> GetEmployees();
 
         Task<EmployeeResponse> GetEmployeeById(int id);
-
     }
 }

@@ -4,19 +4,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GSocobat.Infrastructure.Repositories
 {
-    public class AssetRepository : IAssetRepository
+    public class AssetRepository(GSecobatAppDbContext context) : IAssetRepository
     {
-        private readonly GSecobatAppDbContext _context;
+        private readonly GSecobatAppDbContext _context = context;
 
-        public AssetRepository(GSecobatAppDbContext context)
+        public Task AddAsync(Asset entity)
         {
-            _context = context;
+            throw new NotImplementedException();
         }
+
+        public Task DeleteAsync(Asset entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Asset>> GetAllAssets()
         {
             List<Asset> assets = await _context.Assets.ToListAsync();
 
             return assets;
+        }
+
+        public Task<IEnumerable<Asset>> GetAllAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Asset> GetAssetById(int id)
@@ -42,12 +53,15 @@ namespace GSocobat.Infrastructure.Repositories
             return assets;
         }
 
-        public async Task<bool> UpdateAsync(Asset entity)
+        public Task<Asset?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(Asset entity)
         {
             _context.Update(entity);
             await _context.SaveChangesAsync();
-
-            return true;
         }
     }
 }

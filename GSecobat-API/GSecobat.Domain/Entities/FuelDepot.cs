@@ -17,7 +17,6 @@ namespace GSecobat.Domain.Entities
 
         public double CurrentLevel { get; set; }
 
-        public string Reference { get; set; } = null!;
-
+        public string? Reference { get; set; }
     }
 }

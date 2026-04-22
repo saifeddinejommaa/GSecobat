@@ -6,15 +6,15 @@ namespace GSecobat.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmployeeController : ControllerBase
+    public class EmployeesController : ControllerBase
     {
         IEmployeeService _employeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllEmployees()
         {
             List<EmployeeResponse> response = await _employeeService.GetEmployees();

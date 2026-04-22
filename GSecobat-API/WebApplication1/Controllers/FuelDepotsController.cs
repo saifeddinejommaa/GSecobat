@@ -10,18 +10,18 @@ namespace GSecobat.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FuelDepotController : ControllerBase
+    public class FuelDepotsController : ControllerBase
     {
         private readonly IFuelDepotService _fuelDepotService;
         private readonly IMediator _mediator;
 
-        public FuelDepotController(IMediator mediator, IFuelDepotService service)
+        public FuelDepotsController(IMediator mediator, IFuelDepotService service)
         {
             _fuelDepotService = service;
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll", Name = nameof(GetAllFuelDepots))]
+        [HttpGet("all", Name = nameof(GetAllFuelDepots))]
         [ProducesResponseType(typeof(List<FuelDepotsListResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllFuelDepots([FromQuery] FuelDepotRequestFilter filter)
         {
@@ -30,9 +30,9 @@ namespace GSecobat.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Reffil")]
+        [HttpPost("fuel-Refills")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Reffil([FromBody] DepotReffilRequest request)
+        public async Task<IActionResult> Reffil([FromBody] FuelDepotReffilRequest request)
         {
             return Ok(await _mediator.Send(request));
         }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GSecobat.Application.Features.DepotReffils.Requests
 {
-    public class DepotReffilRequest : IRequest<bool>
+    public class FuelDepotReffilRequest : IRequest<bool>
     {
         public required int FuelDepotId { get; set; }
 
@@ -16,15 +16,15 @@ namespace GSecobat.Application.Features.DepotReffils.Requests
         public int UserId { get; set; }
     }
 
-    public class DepotReffitRequestHandler : IRequestHandler<DepotReffilRequest, bool>
+    public class DepotReffitRequestHandler : IRequestHandler<FuelDepotReffilRequest, bool>
     {
-        private readonly IDepotReffilService _depotReffilService;
+        private readonly IFuelDepotReffilService _depotReffilService;
 
-        public DepotReffitRequestHandler(IDepotReffilService depotReffilService)
+        public DepotReffitRequestHandler(IFuelDepotReffilService depotReffilService)
         {
             _depotReffilService = depotReffilService;
         }
-        public Task<bool> Handle(DepotReffilRequest request, CancellationToken cancellationToken)
+        public Task<bool> Handle(FuelDepotReffilRequest request, CancellationToken cancellationToken)
         {
             return _depotReffilService.ExecuteDepotReffil(request);
         }
