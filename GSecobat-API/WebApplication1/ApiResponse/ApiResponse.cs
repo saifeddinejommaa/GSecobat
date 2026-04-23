@@ -6,6 +6,8 @@
         public T? Response { get; set; }
         public string? ResponseMessage { get; set; }
 
+        public ApiResponse() { }
+
         public ApiResponse(int code, T? response, string message)
         {
             Code = code;

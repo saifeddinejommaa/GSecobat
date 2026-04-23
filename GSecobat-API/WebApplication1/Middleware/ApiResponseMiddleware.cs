@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
+using GSecobat.Api.ApiResponse;
 
-namespace GSecobat.Api.ApiResponse
+namespace GSecobat.Api.Middleware
 {
     public class ApiResponseMiddleware
     {

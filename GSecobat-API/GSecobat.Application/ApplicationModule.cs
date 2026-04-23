@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
+using FluentValidation;
+using GSecobat.Application.Common;
 using MediatR;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Reflection;
@@ -12,22 +14,28 @@ namespace GSecobat.Application
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            // 🔹 Services (convention)
+            // Services
             builder.RegisterAssemblyTypes(assembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            // 🔹 MediatR handlers
-            builder.RegisterAssemblyTypes(assembly)
-                .AsClosedTypesOf(typeof(IRequestHandler<>))
-                .AsImplementedInterfaces();
-
+            // MediatR Handlers
             builder.RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>))
                 .AsImplementedInterfaces();
 
-            // 🔹 AutoMapper
+            // Validators
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IValidator<>))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterGeneric(typeof(ValidationBehavior<,>))
+                .As(typeof(IPipelineBehavior<,>))
+                .InstancePerLifetimeScope();
+
+            //AutoMapper
             builder.Register(ctx =>
             {
                 var assembly = Assembly.GetExecutingAssembly();

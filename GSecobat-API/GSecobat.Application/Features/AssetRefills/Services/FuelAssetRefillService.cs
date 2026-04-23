@@ -22,7 +22,7 @@ namespace GSecobat.Application.Features.AssetReffil.Services
         }
         public async Task<bool> ExecuteFuellAssetReffil(FuelAssetReffilRequest request)
         {
-            FuelAssetReffil newReffil = new()
+            FuelAssetRefill newReffil = new()
             {
                 AssetId = request.AssetId,
                 FuelDepotId = request.FuelDepotId,

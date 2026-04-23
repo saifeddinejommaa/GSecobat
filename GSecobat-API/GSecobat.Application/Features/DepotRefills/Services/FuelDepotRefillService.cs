@@ -2,25 +2,29 @@
 using GSecobat.Application.Features.DepotReffils.Requests;
 using GSecobat.Application.Features.FuelDepots.Repositories;
 using GSecobat.Domain.Entities;
+using GSecobat.Domain.Exceptions;
 
 namespace GSecobat.Application.Features.DepotReffils.Services
 {
-    public class FuelDepotReffilService : IFuelDepotReffilService
+    public class FuelDepotRefillService : IFuelDepotRefillService
     {
-        private readonly IFuelDepotReffilRepository _depotReffilRepository;
+        private readonly IFuelDepotRefillRepository _depotReffilRepository;
         private readonly IFuelDepotRepository _fuelDepotRepository;
 
-        public FuelDepotReffilService(IFuelDepotReffilRepository depotReffilRepository, IFuelDepotRepository fuelDepotRepository)
+        public FuelDepotRefillService(IFuelDepotRefillRepository depotReffilRepository, IFuelDepotRepository fuelDepotRepository)
         {
             _depotReffilRepository = depotReffilRepository;
             _fuelDepotRepository = fuelDepotRepository;
         }
 
-        public async Task<bool> ExecuteDepotReffil(FuelDepotReffilRequest request)
+        public async Task<bool> ExecuteDepotReffil(FuelDepotRefillRequest request)
         {
-            FuelDepot? fuelDepot = await _fuelDepotRepository.GetByIdAsync(request.FuelDepotId);
+            
+            FuelDepot fuelDepot = Guard.AgainstNull(await _fuelDepotRepository
+                                                            .GetByIdAsync(request.FuelDepotId)
+                                                       , "Fuel depot not found");
 
-            FuelDepotReffil newReffil = new()
+            FuelDepotRefill newReffil = new()
             {
                 FuelDepotId = request.FuelDepotId,
                 Quantity = request.Quantity,

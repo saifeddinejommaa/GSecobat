@@ -26,7 +26,7 @@ namespace GSocobat.Infrastructure.Repositories
         public async Task<FuelDepot?> GetByIdAsync(int id)
         {
             return await _context.FuelDepots.Where(depot => depot.Id == id)
-                                        .FirstAsync();
+                                        .FirstOrDefaultAsync();
         }
 
         public async Task UpdateAsync(FuelDepot entity)

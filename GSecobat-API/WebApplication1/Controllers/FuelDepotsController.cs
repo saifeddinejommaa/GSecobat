@@ -32,7 +32,7 @@ namespace GSecobat.Api.Controllers
 
         [HttpPost("fuel-Refills")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Reffil([FromBody] FuelDepotReffilRequest request)
+        public async Task<IActionResult> Reffil([FromBody] FuelDepotRefillRequest request)
         {
             return Ok(await _mediator.Send(request));
         }

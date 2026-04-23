@@ -3,37 +3,37 @@ using GSecobat.Domain.Entities;
 
 namespace GSocobat.Infrastructure.Repositories
 {
-    public class FuelDepotReffilRepository : IFuelDepotReffilRepository
+    public class FuelDepotRefillRepository : IFuelDepotRefillRepository
     {
         private readonly GSecobatAppDbContext _context;
 
-        public FuelDepotReffilRepository(GSecobatAppDbContext context)
+        public FuelDepotRefillRepository(GSecobatAppDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddAsync(FuelDepotReffil entity)
+        public async Task AddAsync(FuelDepotRefill entity)
         {
             await _context.DepotReffils.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(FuelDepotReffil entity)
+        public Task DeleteAsync(FuelDepotRefill entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<FuelDepotReffil>> GetAllAsync()
+        public Task<IEnumerable<FuelDepotRefill>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<FuelDepotReffil?> GetByIdAsync(int id)
+        public Task<FuelDepotRefill?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(FuelDepotReffil entity)
+        public Task UpdateAsync(FuelDepotRefill entity)
         {
             throw new NotImplementedException();
         }

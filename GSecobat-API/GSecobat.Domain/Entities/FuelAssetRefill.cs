@@ -2,8 +2,8 @@
 
 namespace GSecobat.Domain.Entities
 {
-    [Table("FuelAssetReffil")]
-    public class FuelAssetReffil
+    [Table("FuelAssetRefill")]
+    public class FuelAssetRefill
     {
         public int Id { get; set; }
         public DateTime ReffilDate { get; set; }

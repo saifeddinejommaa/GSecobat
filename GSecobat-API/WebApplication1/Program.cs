@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using GSecobat.Api.ApiResponse;
+using GSecobat.Api.Middleware;
 using GSecobat.Application;
 using GSecobat.Application.Common;
 using GSecobat.Infrastructure;
@@ -65,7 +65,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Response Middleware
 app.UseMiddleware<ApiResponseMiddleware>();
+
+// Exception Middlware
+app.UseMiddleware<ExceptionHandlerMiddlware>();
 
 app.UseHttpsRedirection();
 
