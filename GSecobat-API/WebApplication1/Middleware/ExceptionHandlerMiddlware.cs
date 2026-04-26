@@ -1,7 +1,6 @@
 ﻿using GSecobat.Api.ApiResponse;
 using GSecobat.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
 
 namespace GSecobat.Api.Middleware
 {
@@ -57,7 +56,6 @@ namespace GSecobat.Api.Middleware
                                 null,
                                 businessException.Message
                                );
-                        
 
                         break;
                     }
@@ -74,12 +72,12 @@ namespace GSecobat.Api.Middleware
                     }
                 default:
                     statusCode = StatusCodes.Status500InternalServerError;
-
                     response = new ApiResponse<object?>(
                         statusCode,
                         null,
                         "Internal server error"
                     );
+
                     break;
             }
 

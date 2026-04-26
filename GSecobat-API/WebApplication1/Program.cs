@@ -56,7 +56,21 @@ builder.Services.AddTransient(
 // Log config
 builder.Logging.AddConsole();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -65,11 +79,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Response Middleware
-app.UseMiddleware<ApiResponseMiddleware>();
-
 // Exception Middlware
 app.UseMiddleware<ExceptionHandlerMiddlware>();
+
+// Response Middleware
+app.UseMiddleware<ApiResponseMiddleware>();
 
 app.UseHttpsRedirection();
 
