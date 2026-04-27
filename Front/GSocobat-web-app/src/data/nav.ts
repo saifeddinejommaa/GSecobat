@@ -14,8 +14,8 @@ export const navItems: NavItem[] = [
   { icon: "🛍", label: "Commandes", section: "commerce", badge: "4" , path: "/orders" },
   { icon: "🚚", label: "Machines", section: "main", path: "/assets" },
   { icon: "💳", label: "Analyses", section: "commerce", path: "/analyses" },
-  { icon: "📣", label: "Achats", section: "marketing", path: "/purchases" },
-  { icon: "📩", label: "Stations", section: "marketing", path: "/stations" },
+  { icon: "⛽🔄", label: "Rechargement", section: "marketing", path: "/purchases" },
+  { icon: "⛽", label: "Stations", section: "marketing", path: "/depots" },
   { icon: "⚙️", label: "Paramètres", section: "system", path: "/settings" },
   { icon: "🔔", label: "Notifications", section: "system", path: "/notifications" },
 ];

@@ -1,4 +1,6 @@
 ﻿using GSecobat.Application.Features.AssetReffil.Requests;
+using GSecobat.Application.Features.AssetReffil.Services;
+using GSecobat.Application.Features.AssetRefills.Responses;
 using GSecobat.Application.Features.Assets.Requests;
 using GSecobat.Application.Features.Assets.Responses;
 using GSecobat.Application.Features.Assets.Services;
@@ -13,19 +15,32 @@ namespace GSecobat.Api.Controllers
     public class AssetsController : ControllerBase
     {
         private readonly IAssetService _assetService;
+        private readonly IFuelAssetRefillService _fuelAssetReffilService;
         private readonly IMediator _mediator;
 
-        public AssetsController(IMediator mediator, IAssetService employeeService)
+        public AssetsController(IMediator mediator, IAssetService employeeService, IFuelAssetRefillService fuelAssetRefillService)
         {
             _assetService = employeeService;
+            _fuelAssetReffilService = fuelAssetRefillService;
             _mediator = mediator;
         }
+
+        #region GET
 
         [HttpGet("all", Name = nameof(GetAllAssets))]
         [ProducesResponseType(typeof(List<AssetResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllAssets([FromQuery] AssetsRequestFilter filter)
         {
             List<AssetResponse> response = await _assetService.GetAllAssets(filter);
+
+            return Ok(response);
+        }
+
+        [HttpGet("all-reffils", Name = nameof(GetAllAssetReffils))]
+        [ProducesResponseType(typeof(List<AssetReffilResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllAssetReffils([FromQuery] AssetReffilsRequestFilter filter)
+        {
+            List<AssetReffilResponse> response = await _fuelAssetReffilService.GetAllAssetRefills(filter);
 
             return Ok(response);
         }
@@ -38,11 +53,17 @@ namespace GSecobat.Api.Controllers
             return Ok(response);
         }
 
+        #endregion
+
+        #region POST
+
         [HttpPost("fuel-refills")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> FuelRefill([FromBody] FuelAssetReffilRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
+
+        #endregion
     }
 }
