@@ -10,6 +10,6 @@ namespace GSecobat.Domain.Entities
 
         public string? Mch { get; set; }
 
-        public string TypeLabel { get; set; } = null!;
+        public required string TypeLabel { get; set; }
     }
 }

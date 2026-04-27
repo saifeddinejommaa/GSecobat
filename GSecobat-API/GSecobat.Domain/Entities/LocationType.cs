@@ -2,10 +2,11 @@
 
 namespace GSecobat.Domain.Entities
 {
-    [Table("FuelDepotType")]
-    public class FuelDepotType
+    [Table("LocationType")]
+    public class LocationType
     {
         public int Id { get; set; }
-        public required string Label { get; set; }
+
+        public required string Name { get; set; }
     }
 }
