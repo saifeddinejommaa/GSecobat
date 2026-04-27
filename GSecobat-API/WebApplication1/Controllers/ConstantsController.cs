@@ -1,5 +1,4 @@
-﻿using GSecobat.Application.Features.Assets.Requests;
-using GSecobat.Application.Features.Assets.Responses;
+﻿using GSecobat.Application.Features.Assets.Responses;
 using GSecobat.Application.Features.Constants.Responses;
 using GSecobat.Application.Features.Constants.Services;
 using Microsoft.AspNetCore.Mvc;
