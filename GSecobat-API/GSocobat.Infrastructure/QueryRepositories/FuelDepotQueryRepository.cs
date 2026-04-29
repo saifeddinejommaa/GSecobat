@@ -58,9 +58,7 @@ namespace GSecobat.Infrastructure.QueryRepositories
                 parameters.Add("Name", $"%{filter.Name}%");
             }
 
-            using var connection = _dbConnection;
-
-            var result = await connection.QueryAsync<FuelDepotsListResponse>(
+            var result = await _dbConnection.QueryAsync<FuelDepotsListResponse>(
                 sql.ToString(),
                 parameters
             );

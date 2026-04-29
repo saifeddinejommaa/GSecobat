@@ -1,7 +1,8 @@
 import { create } from "zustand";
+import type { MachineReffil } from "../../domain/models/MachineReffil";
 
 type MachineReffilsState = {
-  machinesReffils: FuelDepot[];
+  machinesReffils: MachineReffil[];
   loading: boolean;
 
   filters: {
