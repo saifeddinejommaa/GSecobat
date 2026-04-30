@@ -7,10 +7,22 @@ namespace GSecobat.Application.Features.Missions.Services
     public class MissionsService : IMissionsService
     {
         private readonly IMissionsQueryRepository _missionsQueryRepository;
+        private readonly IMissionRepository _missionRepository;
 
-        public MissionsService(IMissionsQueryRepository missionsQueryRepository)
+        public MissionsService(IMissionRepository missionRepository,IMissionsQueryRepository missionsQueryRepository)
         {
+            _missionRepository = missionRepository;
             _missionsQueryRepository = missionsQueryRepository;
+        }
+
+        public async Task AddNewMissionBusinessTrip(AddMissionBusinessTripRequest request)
+        {
+            await _missionRepository.AddNewMissionBusinessTrip(request);
+        }
+
+        public async Task AddNewMissionConstructionSite(AddMissionConstructionSiteRequest request)
+        {
+            await _missionRepository.AddNewMissionConstructionSite(request);
         }
 
         public async Task<List<MissionResponse>> GetAllMissions(MissionsRequestFilter filter)

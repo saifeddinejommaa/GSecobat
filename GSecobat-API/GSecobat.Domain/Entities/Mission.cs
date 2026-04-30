@@ -7,7 +7,10 @@ namespace GSecobat.Domain.Entities
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
+        public int AssetId { get; set; }
         public int MissionTypeId { get; set; }
+        public required DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public required string MissionTitle { get; set; }
         public string? MissionDesc { get; set; }
     }

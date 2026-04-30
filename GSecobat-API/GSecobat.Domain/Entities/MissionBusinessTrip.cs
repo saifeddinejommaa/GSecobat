@@ -9,5 +9,6 @@ namespace GSecobat.Domain.Entities
         public int MissionId { get; set; }
         public int FromLocationId { get; set; }
         public int ToLocationId { get; set; }
+        public double Distance { get; set; }
     }
 }
