@@ -1,4 +1,5 @@
-import { AssetRepository } from "../data/AssetRepository";
+import { AssetRepository } from "../data/repositories/AssetRepository";
+
 
 export const GetAssetsUseCase = async (filters?: {
   assetType?: number;
@@ -7,7 +8,7 @@ export const GetAssetsUseCase = async (filters?: {
 }) => {
   const machines = await AssetRepository.getAll(filters);
 
-  return machines.Response.map((m) => ({
+  return machines.map((m) => ({
     ...m,
     isActive: m.assetStatusLabel === "Actif",
   }));

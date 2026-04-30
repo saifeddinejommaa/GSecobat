@@ -1,31 +1,35 @@
 import { useEffect } from "react";
-import { useMachineStore } from "../../machines/ui/state/MachineState";
-import FuelReffilsFilters from "./MachineReffilsFilterWidget";
 import OrdersTable from "../../components/tables/OrdersTable";
+import { useMachineReffilsStore } from "./state/MachineReffilsState";
+import MachineReffilsFilters from "./MachineReffilsFilterWidget";
 
-export default function FuelReffilPages() {
-  const { machines, fetchFuelReffils, loading } = useFuelReffilsStore();
+export default function MachineReffilsPages() {
+  const { machinesReffils, fetchMachineReffils, loading } = useMachineReffilsStore();
   useEffect(() => {
-    fetchFuelReffils();
+    fetchMachineReffils();
   }, []);
   
   return (
     <div className="glass-card">
-      <FuelReffilsFilters onApply={(filters:any) => {
-    useMachineStore.setState({ filters });
-    fetchFuelReffils();
+      <MachineReffilsFilters onApply={(filters:any) => {
+    useMachineReffilsStore.setState({ filters });
+    fetchMachineReffils();
   }}  />
      <OrdersTable
-  data={machines}
+  data={machinesReffils}
   columns={[
-    { key: "id", label: "ID" },
-    { key: "serialNumber", label: "Serial" },
-    { key: "typeLabel", label: "Type" },
-    { key: "assetStatusLabel", label: "Status" },
+    { key: "reffilDate", label: "Date" },
+    { key: "assetSerialNumber", label: "Numéro Machine" },
+    { key: "depotName", label: "Dépôt" },
     {
-      key: "mch",
-      label: "MCH",
-      render: (item) => item.mch ?? "-",
+      key: "quantity",
+      label: "Quantité",
+      render: (item) => item.quantity ?? "-",
+    },
+    {
+      key: "isFull",
+      label: "Est Pleine",
+      render: (item) => (item.isFull ? "Oui" : "Non") ,
     },
   ]}
 />

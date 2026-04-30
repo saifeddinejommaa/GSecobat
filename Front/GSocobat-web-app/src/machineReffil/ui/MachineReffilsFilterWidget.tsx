@@ -1,12 +1,12 @@
 import { useState } from "react";
+import type { MachineReffilsRequestFilter } from "../domain/models/requestFilters/MachineReffilRequestFilter";
 
-export default function FuelReffilsFilters({ onApply }: any) {
-  const [filters, setFilters] = useState({
-    assetType: "",
-    assetStatus: "",
-    serialNumber: "",
-    statusType: "",
-    mch: "",
+export default function MachineReffilsFilters({ onApply }: any) {
+  const [filters, setFilters] = useState<MachineReffilsRequestFilter>({
+    assetSerialNumber: "",
+    depotName: "",
+    fuelDepotTypeId: undefined,
+    reffilDate: "",
   });
 
   const handleChange = (key: string, value: string) => {
@@ -48,7 +48,7 @@ export default function FuelReffilsFilters({ onApply }: any) {
         <input
           type="text"
           placeholder="Serial Number"
-          onChange={(e) => handleChange("serialNumber", e.target.value)}
+          onChange={(e) => handleChange("assetSerialNumber", e.target.value)}
         />
 
         {/* Status Type */}

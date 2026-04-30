@@ -1,20 +1,15 @@
 import { create } from "zustand";
 import type { MachineReffil } from "../../domain/models/MachineReffil";
+import { MachineReffilRepository } from "../../data/Repositories/MachineReffilRepository";
+import type { MachineReffilsRequestFilter } from "../../domain/models/requestFilters/MachineReffilRequestFilter";
 
 type MachineReffilsState = {
   machinesReffils: MachineReffil[];
   loading: boolean;
-
-  filters: {
-    assetType?: number;
-    assetStatus?: number;
-    serialNumber?: string;
-    mch?: string;
-  };
+  filters: MachineReffilsRequestFilter;
 
   setFilter: (key: string, value: any) => void;
   clearFilters: () => void;
-
   fetchMachineReffils: () => Promise<void>;
 };
 
@@ -35,10 +30,10 @@ export const useMachineReffilsStore = create<MachineReffilsState>((set, get) => 
 
   fetchMachineReffils: async () => {
     set({ loading: true });
-
     try {
-      const data = await MachineReffilsRepository.getAll(get().filters);
-      set({ machinesReffils: data.Response });
+      console.log("Current filters in store:", get().filters);
+      const data = await MachineReffilRepository.getAll(get().filters);
+      set({ machinesReffils: data });
     } finally {
       set({ loading: false });
     }

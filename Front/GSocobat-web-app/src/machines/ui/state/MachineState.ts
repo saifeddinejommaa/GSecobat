@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { Machine } from "../Models/Machine";
-import { AssetRepository } from "../../data/AssetRepository";
+import { AssetRepository } from "../../data/repositories/AssetRepository";
 
 type MachineState = {
   machines: Machine[];
@@ -38,10 +38,9 @@ export const useMachineStore = create<MachineState>((set, get) => ({
 
   fetchMachines: async () => {
     set({ loading: true });
-
     try {
       const data = await AssetRepository.getAll(get().filters);
-      set({ machines: data.Response });
+      set({ machines: data });
     } finally {
       set({ loading: false });
     }
