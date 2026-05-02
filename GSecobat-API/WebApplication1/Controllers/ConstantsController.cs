@@ -17,7 +17,7 @@ namespace GSecobat.Api.Controllers
         }
 
         [HttpGet(Name = nameof(GetConstants))]
-        [ProducesResponseType(typeof(List<AssetResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ConstantsResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetConstants()
         {
             ConstantsResponse response = await _constantsService.GetConstants();

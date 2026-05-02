@@ -40,7 +40,7 @@ namespace GSocobat.Infrastructure.Repositories
                             Label = x.TypeLabel
                         }).ToList(),
 
-                LocationType = locationTypes
+                LocationTypes = locationTypes
                         .Select(x => new ConstantResponse
                         {
                             Id = x.Id,

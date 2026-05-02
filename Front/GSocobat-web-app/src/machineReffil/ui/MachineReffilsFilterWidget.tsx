@@ -1,7 +1,11 @@
 import { useState } from "react";
 import type { MachineReffilsRequestFilter } from "../domain/models/requestFilters/MachineReffilRequestFilter";
+import { useConstantsStore } from "../../constants/ConstantsState";
+import { FuelDepotTypeSelect } from "../../common/Widgets/ConstantSelects/FuelDepotTypeSelect";
 
 export default function MachineReffilsFilters({ onApply }: any) {
+  const constants = useConstantsStore((s) => s.constants);
+  console.log("CONSTANTS:", constants);
   const [filters, setFilters] = useState<MachineReffilsRequestFilter>({
     assetSerialNumber: "",
     depotName: "",
@@ -26,44 +30,22 @@ export default function MachineReffilsFilters({ onApply }: any) {
       </div>
 
       <div className="filters-grid">
-        {/* Asset Type */}
-        <select
-          onChange={(e) => handleChange("assetType", e.target.value)}
-        >
-          <option value="">Asset Type</option>
-          <option value="1">Type 1</option>
-          <option value="2">Type 2</option>
-        </select>
-
-        {/* Asset Status */}
-        <select
-          onChange={(e) => handleChange("assetStatus", e.target.value)}
-        >
-          <option value="">Asset Status</option>
-          <option value="1">Active</option>
-          <option value="2">Inactive</option>
-        </select>
-
         {/* Serial Number */}
         <input
           type="text"
-          placeholder="Serial Number"
+          placeholder="Série de la machine"
           onChange={(e) => handleChange("assetSerialNumber", e.target.value)}
         />
 
-        {/* Status Type */}
+        {/* Depot Name */}
         <input
           type="text"
-          placeholder="Status Type"
-          onChange={(e) => handleChange("statusType", e.target.value)}
+          placeholder="Nom du dépot"
+          onChange={(e) => handleChange("depotName", e.target.value)}
         />
 
-        {/* MCH */}
-        <input
-          type="text"
-          placeholder="MCH"
-          onChange={(e) => handleChange("mch", e.target.value)}
-        />
+         {/* Fuel Depot Type */}
+        <FuelDepotTypeSelect onChange={(e)=> handleChange("fuelDepotTypeId",e ? e.toString() : "")}/>
       </div>
 
       <button

@@ -18,7 +18,10 @@ export default function MachineReffilsPages() {
      <OrdersTable
   data={machinesReffils}
   columns={[
-    { key: "reffilDate", label: "Date" },
+    { key: "reffilDate", label: "Date" , render: (item) =>
+    item.reffilDate
+      ? new Date(item.reffilDate).toLocaleDateString("fr-FR")
+      : "-", },
     { key: "assetSerialNumber", label: "Numéro Machine" },
     { key: "depotName", label: "Dépôt" },
     {

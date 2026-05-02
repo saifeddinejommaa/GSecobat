@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { FuelDepotRequestFilter } from "../../domain/Models/FuelDepotRequestFilter";
+import { FuelDepotTypeSelect } from "../../../common/Widgets/ConstantSelects/FuelDepotTypeSelect";
 
 type Props = {
   onApply: (filters: FuelDepotRequestFilter) => void;
@@ -50,34 +51,12 @@ export default function FuelDepotFilters({ onApply}: Props) {
         />
 
         {/* Type */}
-        <select
-          value={filters.typeId ?? ""}
-          onChange={(e) =>
+        <FuelDepotTypeSelect onChange={(e) =>
             handleChange(
               "typeId",
-              e.target.value ? Number(e.target.value) : null
+              e? Number(e) : null
             )
-          }
-        >
-          <option value="">Type</option>
-          <option value="1">Type 1</option>
-          <option value="2">Type 2</option>
-        </select>
-
-        {/* Location */}
-        <select
-          value={filters.locationId ?? ""}
-          onChange={(e) =>
-            handleChange(
-              "locationId",
-              e.target.value ? Number(e.target.value) : null
-            )
-          }
-        >
-          <option value="">Location</option>
-          <option value="1">Location 1</option>
-          <option value="2">Location 2</option>
-        </select>
+          }/>
       </div>
 
       <button

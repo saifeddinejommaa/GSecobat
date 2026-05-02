@@ -9,9 +9,10 @@ type Column<T> = {
 type Props<T> = {
   data: T[];
   columns: Column<T>[];
+  onRowClick?: (item: T) => void;
 };
 
-export default function DataTable<T>({ data, columns }: Props<T>) {
+export default function DataTable<T>({ data, columns, onRowClick }: Props<T>) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
@@ -33,7 +34,7 @@ export default function DataTable<T>({ data, columns }: Props<T>) {
 
         <tbody>
           {paginatedData.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => onRowClick?.(item)}>
               {columns.map((col) => (
                 <td key={String(col.key)}>
                   {col.render

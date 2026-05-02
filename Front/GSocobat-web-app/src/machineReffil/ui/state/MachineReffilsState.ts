@@ -13,7 +13,6 @@ type MachineReffilsState = {
   fetchMachineReffils: () => Promise<void>;
 };
 
-
 export const useMachineReffilsStore = create<MachineReffilsState>((set, get) => ({
   machinesReffils: [],
   loading: false,
@@ -31,7 +30,6 @@ export const useMachineReffilsStore = create<MachineReffilsState>((set, get) => 
   fetchMachineReffils: async () => {
     set({ loading: true });
     try {
-      console.log("Current filters in store:", get().filters);
       const data = await MachineReffilRepository.getAll(get().filters);
       set({ machinesReffils: data });
     } finally {

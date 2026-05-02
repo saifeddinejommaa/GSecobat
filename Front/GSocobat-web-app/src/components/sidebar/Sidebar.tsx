@@ -9,9 +9,11 @@ type Props = {
 export default function Sidebar({ activeNav, setActiveNav }: Props) {
   const sections = [
     { key: "main", label: "Principal" },
-    { key: "commerce", label: "Commerce" },
-    { key: "marketing", label: "Marketing" },
+    {key:"Activities", label: "Activité"},
+    {key:"Depot", label: "Dépots"},
+    {key:"Fuel", label:"Carburant"},
     { key: "system", label: "Système" },
+    
   ];
 
 const navigate = useNavigate();

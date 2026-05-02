@@ -1,20 +1,25 @@
 import { useState } from "react";
+import { AssetTypesSelect } from "../../../common/Widgets/ConstantSelects/AssetTypesSelect";
+import type { AssetsRequestFilter } from "../../domain/models/AssetsRequestFilter";
+import { AssetStatusesSelect } from "../../../common/Widgets/ConstantSelects/AssetStatusesSelect";
 
 export default function MachinesFilters({ onApply }: any) {
-  const [filters, setFilters] = useState({
-    assetType: "",
-    assetStatus: "",
+  const [filters, setFilters] = useState<AssetsRequestFilter>({
+    assetStatus: undefined,
     serialNumber: "",
-    statusType: "",
+    assetTypeId: undefined,
     mch: "",
   });
 
-  const handleChange = (key: string, value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const handleChange = <K extends keyof AssetsRequestFilter>(
+      key: K,
+      value: AssetsRequestFilter[K]
+    ) => {
+      setFilters((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    };
 
   return (
     <div className="glass-card" style={{ marginBottom: 16 }}>
@@ -27,35 +32,16 @@ export default function MachinesFilters({ onApply }: any) {
 
       <div className="filters-grid">
         {/* Asset Type */}
-        <select
-          onChange={(e) => handleChange("assetType", e.target.value)}
-        >
-          <option value="">Asset Type</option>
-          <option value="1">Type 1</option>
-          <option value="2">Type 2</option>
-        </select>
+        <AssetTypesSelect onChange={(e) => handleChange("assetTypeId",  e? Number(e) : undefined)}></AssetTypesSelect>
 
         {/* Asset Status */}
-        <select
-          onChange={(e) => handleChange("assetStatus", e.target.value)}
-        >
-          <option value="">Asset Status</option>
-          <option value="1">Active</option>
-          <option value="2">Inactive</option>
-        </select>
-
+        <AssetStatusesSelect onChange={(e) => handleChange("assetStatus",e? Number(e) : undefined )}/>
+       
         {/* Serial Number */}
         <input
           type="text"
           placeholder="Serial Number"
           onChange={(e) => handleChange("serialNumber", e.target.value)}
-        />
-
-        {/* Status Type */}
-        <input
-          type="text"
-          placeholder="Status Type"
-          onChange={(e) => handleChange("statusType", e.target.value)}
         />
 
         {/* MCH */}
