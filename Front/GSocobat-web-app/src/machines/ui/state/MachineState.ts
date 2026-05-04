@@ -1,17 +1,13 @@
 import { create } from "zustand";
 import type { Machine } from "../Models/Machine";
-import { AssetRepository } from "../../data/repositories/AssetRepository";
+import { GetAssetsUseCase } from "../../domain/GetAssetsUseCase";
+import type { AssetsRequestFilter } from "../../domain/models/AssetsRequestFilter";
 
 type MachineState = {
   machines: Machine[];
   loading: boolean;
 
-  filters: {
-    assetType?: number;
-    assetStatus?: number;
-    serialNumber?: string;
-    mch?: string;
-  };
+  filters: AssetsRequestFilter;
 
   setFilter: (key: string, value: any) => void;
   clearFilters: () => void;
@@ -24,7 +20,8 @@ export const useMachineStore = create<MachineState>((set, get) => ({
   machines: [],
   loading: false,
 
-  filters: {},
+  filters: {
+  },
 
   setFilter: (key, value) =>
     set((state) => ({
@@ -39,7 +36,7 @@ export const useMachineStore = create<MachineState>((set, get) => ({
   fetchMachines: async () => {
     set({ loading: true });
     try {
-      const data = await AssetRepository.getAll(get().filters);
+      const data = await GetAssetsUseCase(get().filters);
       set({ machines: data });
     } finally {
       set({ loading: false });

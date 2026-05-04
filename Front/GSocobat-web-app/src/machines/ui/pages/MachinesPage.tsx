@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import OrdersTable from "../../../components/tables/OrdersTable";
-import MachinesFilters from "../components/MachinesFilterWidget";
+import MachinesFilters from "../widgets/MachinesFilterWidget";
 import { useMachineStore } from "../state/MachineState";
 
 export default function MachinesPages() {

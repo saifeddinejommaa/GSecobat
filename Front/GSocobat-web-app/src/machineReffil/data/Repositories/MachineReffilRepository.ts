@@ -10,6 +10,7 @@ export const MachineReffilRepository = {
   getAll: async (filters?: MachineReffilsRequestFilter) => {
     
       const params = buildQueryParams(filters as any);
+      console.log("api",`${API_BASE_URL}assets/all-reffils?${params.toString()}`)
        const httpResponse = await  http<ApiResponse<MachineReffilResponse[]>>(`${API_BASE_URL}assets/all-reffils?${params.toString()}`);
          return (httpResponse.Response ?? []).map(mapMachineReffilToModel);
     },

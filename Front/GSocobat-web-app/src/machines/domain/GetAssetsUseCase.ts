@@ -1,11 +1,8 @@
 import { AssetRepository } from "../data/repositories/AssetRepository";
+import type { AssetsRequestFilter } from "./models/AssetsRequestFilter";
 
 
-export const GetAssetsUseCase = async (filters?: {
-  assetType?: number;
-  assetStatus?: number;
-  serialNumber?: string;
-}) => {
+export const GetAssetsUseCase = async (filters: AssetsRequestFilter) => {
   const machines = await AssetRepository.getAll(filters);
 
   return machines.map((m) => ({

@@ -50,8 +50,8 @@ namespace GSocobat.Infrastructure.QueryRepositoryes
 
             if (!string.IsNullOrWhiteSpace(filter.SerialNumber))
             {
-                sql.Append(@" AND a.""SerialNumber"" = @SerialNumber");
-                parameters.Add("SerialNumber", filter.SerialNumber);
+                sql.Append(@" AND a.""SerialNumber"" ILIKE @SerialNumber");
+                parameters.Add("SerialNumber", $"%{filter.SerialNumber}%");
             }
 
             if (filter.StatusType.HasValue)
@@ -62,8 +62,8 @@ namespace GSocobat.Infrastructure.QueryRepositoryes
 
             if (!string.IsNullOrWhiteSpace(filter.Mch))
             {
-                sql.Append(@" AND a.""Mch"" = @Mch");
-                parameters.Add("Mch", filter.Mch);
+                sql.Append(@" AND a.""Mch"" ILIKE @Mch");
+                parameters.Add("Mch", $"%{filter.Mch}%");
             }
 
             using var connection = _dbConnection;
