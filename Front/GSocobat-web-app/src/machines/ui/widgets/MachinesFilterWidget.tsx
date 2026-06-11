@@ -32,7 +32,7 @@ export default function MachinesFilters({ onApply }: any) {
 
       <div className="filters-grid">
         {/* Asset Type */}
-        <AssetTypesSelect onChange={(e) => handleChange("assetTypeId",  e? Number(e) : undefined)}></AssetTypesSelect>
+        <AssetTypesSelect onChange={(e) => handleChange("assetTypeId", e? "" : undefined )}></AssetTypesSelect>
 
         {/* Asset Status */}
         <AssetStatusesSelect onChange={(e) => handleChange("assetStatus",e? Number(e) : undefined )}/>

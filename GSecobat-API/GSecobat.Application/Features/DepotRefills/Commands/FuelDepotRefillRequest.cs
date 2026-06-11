@@ -12,8 +12,6 @@ namespace GSecobat.Application.Features.DepotReffils.Requests
         public required DateTime Date { get; set; }
 
         public double Quantity { get; set; }
-
-        public int UserId { get; set; }
     }
 
     public class FuelDepotRefillFiltersValidator : AbstractValidator<FuelDepotRefillRequest>
@@ -21,7 +19,6 @@ namespace GSecobat.Application.Features.DepotReffils.Requests
         public FuelDepotRefillFiltersValidator()
         {
             RuleFor(x => x.FuelDepotId).GreaterThan(0);
-            RuleFor(x => x.UserId).GreaterThan(0);
             RuleFor(x => x.Quantity).GreaterThan(0);
         }
     }

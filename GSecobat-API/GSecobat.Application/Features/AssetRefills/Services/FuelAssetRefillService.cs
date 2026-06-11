@@ -33,9 +33,8 @@ namespace GSecobat.Application.Features.AssetReffil.Services
                 AssetId = request.AssetId,
                 FuelDepotId = request.FuelDepotId,
                 Quantity = request.Quantity,
-                ReffilDate = DateTime.UtcNow,
+                ReffilDate = request.ReffilDate,
                 IsFull = request.IsFull ? 1 : 0,
-                UserId = request.UserId,
             };
 
             Asset assetReffil = await _assetRepository.GetAssetById(request.AssetId);

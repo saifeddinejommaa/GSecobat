@@ -41,7 +41,7 @@ namespace GSecobat.Application.Features.DepotReffils.Services
             {
                 FuelDepotId = request.FuelDepotId,
                 Quantity = request.Quantity,
-                ReffilDate = DateTime.UtcNow,
+                ReffilDate = request.Date,
             };
 
             fuelDepot.CurrentLevel += request.Quantity;

@@ -3,8 +3,7 @@ import OrdersTable from "../../components/tables/OrdersTable";
 import { useMachineReffilsStore } from "./state/MachineReffilsState";
 import MachineReffilsFilters from "./MachineReffilsFilterWidget";
 import { Modal } from "../../common/Widgets/Modal";
-import type { Asset } from "../../machines/domain/models/Asset";
-import { MachineAutocomplete } from "../../machines/ui/widgets/MachineAutocomplete";
+import NewMachineReffilsPage from "./NewMachineReffilsPage";
 
 export default function MachineReffilsPages() {
   const [open, setOpen] = useState(false);
@@ -17,7 +16,7 @@ export default function MachineReffilsPages() {
     <div className="glass-card">
       <div className="card-header">
         <div>
-          <div className="card-title">Machine Reffils</div>
+          <div className="card-title">Liste des recharges machines</div>
           <div className="card-sub">Gestion des remplissages</div>
         </div>
 
@@ -25,7 +24,7 @@ export default function MachineReffilsPages() {
           className="btn-primary"
           onClick={() => setOpen(true)}
         >
-          + Ajouter
+          + Charger une machine
         </button>
       </div>
       <MachineReffilsFilters onApply={(filters: any) => {
@@ -56,30 +55,7 @@ export default function MachineReffilsPages() {
         ]}
       />
       <Modal open={open} onClose={() => setOpen(false)}>
-        <h2>Ajouter un remplissage</h2>
-
-        <div className="filters-grid" style={{ marginTop: 16 }}>
-          <MachineAutocomplete onChange={(e: Asset) => console.log(e?.typeLabel)}></MachineAutocomplete>
-          <input placeholder="Dépôt" />
-          <input type="number" placeholder="Quantité" />
-
-          <select>
-            <option value="">Est pleine ?</option>
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-          </select>
-        </div>
-
-        <button
-          className="btn-primary"
-          style={{ marginTop: 16 }}
-          onClick={() => {
-            // 👉 appel API ici
-            setOpen(false);
-          }}
-        >
-          Enregistrer
-        </button>
+        <NewMachineReffilsPage onClose={() => setOpen(false)} />
       </Modal>
     </div>
   );

@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import type { Mission } from "../../domain/models/Mission";
 import type { MissionRequestFilter } from "../../domain/models/MissionsRequestFIlter";
-import { MissionRepository } from "../../data/repositories/MissionRepository";
 import { GetMissionsUseCase } from "../../domain/useCases/GetMissionsUseCase";
 
 type MissionsState = {

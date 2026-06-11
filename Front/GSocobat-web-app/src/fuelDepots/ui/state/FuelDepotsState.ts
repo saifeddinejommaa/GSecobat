@@ -41,7 +41,7 @@ export const useDepotsStore = create<FuelDepotsState>((set, get) => ({
 
     try {
       const data = await FuelDepotRepository.getAll(get().filters);
-      set({ depots: data.Response });
+      set({ depots: data });
     } finally {
       set({ loading: false });
     }

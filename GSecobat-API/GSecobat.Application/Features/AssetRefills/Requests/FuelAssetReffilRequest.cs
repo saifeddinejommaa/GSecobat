@@ -1,16 +1,27 @@
-﻿using GSecobat.Application.Features.AssetReffil.Services;
+﻿using FluentValidation;
+using GSecobat.Application.Features.AssetReffil.Services;
 using MediatR;
 
 namespace GSecobat.Application.Features.AssetReffil.Requests
 {
     public class FuelAssetReffilRequest : IRequest<bool>
     {
-        public DateTime? ReffilDate { get; set; }
+        public DateTime ReffilDate { get; set; }
         public required int AssetId { get; set; }
         public required int FuelDepotId { get; set; }
-        public  required int UserId { get; set; }
         public required double Quantity { get; set; }
         public required bool IsFull { get; set; }
+    }
+
+    public class FuelAssetRefillFiltersValidator : AbstractValidator<FuelAssetReffilRequest>
+    {
+        public FuelAssetRefillFiltersValidator()
+        {
+            RuleFor(x => x.FuelDepotId).GreaterThan(0);
+            RuleFor(x => x.AssetId).GreaterThan(0);
+            RuleFor(x => x.Quantity).GreaterThan(0);
+            RuleFor(x => x.Quantity).GreaterThan(0);
+        }
     }
 
     public class FuelAssetReffitRequestHandler : IRequestHandler<FuelAssetReffilRequest, bool>

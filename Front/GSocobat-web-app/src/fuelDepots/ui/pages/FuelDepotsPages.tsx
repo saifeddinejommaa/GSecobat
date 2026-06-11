@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import OrdersTable from "../../../components/tables/OrdersTable";
 import { useDepotsStore } from "../state/FuelDepotsState";
-import FuelDepotFilters from "../components/fuelDepotFilterWidget";
+import FuelDepotFilters from "../widgets/fuelDepotFilterWidget";
 
 export default function FuelDepotsPages() {
   const { depots, fetchDepots, loading } = useDepotsStore();

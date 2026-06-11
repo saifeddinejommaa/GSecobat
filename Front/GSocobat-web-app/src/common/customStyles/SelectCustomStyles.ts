@@ -38,10 +38,9 @@ export const customStyles = {
     fontSize: "13px",
   }),
 
-  input: (base: any) => ({
+ input: (base: any) => ({
     ...base,
-     color: "transparent",
-  caretColor: "transparent",
+    color: "white",
   }),
 
   dropdownIndicator: (base: any, state: any) => ({
