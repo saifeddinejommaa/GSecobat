@@ -15,7 +15,37 @@
   .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: -100px; right: 10%; }
   .orb-3 { width: 300px; height: 300px; background: #0f766e; top: 40%; left: 35%; }
 
-  /* SIDEBAR */
+.nav-children {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0; /* IMPORTANT: no weird indentation */
+}
+
+.nav-item {
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-item--child {
+  margin-left: 24px;
+  font-size: inherit;
+  opacity: 1;
+}
+
+.nav-item--child:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+
+
+.arrow {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
   .sidebar { width: 260px; min-height: 100vh; background: rgba(255,255,255,0.03); border-right: 1px solid var(--glass-border); backdrop-filter: blur(20px); display: flex; flex-direction: column; position: sticky; top: 0; z-index: 10; flex-shrink: 0; }
   .logo-area { padding: 26px 22px 18px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 12px; }
   .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; box-shadow: 0 0 20px rgba(108,140,255,0.4); }
@@ -132,16 +162,15 @@
 
 .filters-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
+  width: 100%;
 }
 
 .field {
-  display: grid;
- grid-template-columns: 180px 1fr;
-  align-items: center;
-  gap: 12px;
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .forms-column {
@@ -277,11 +306,16 @@ select {
   cursor: pointer;
 }
 
-.modal-footer{
-  margin-top: auto;
+.forms-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 
+.form-footer {
   display: flex;
   justify-content: flex-end;
+  margin-top: 24px;
 }
 
 .glass-input {
@@ -320,6 +354,7 @@ select {
 
 .glass-label {
   display: block;
+  text-align: left;
   margin-bottom: 6px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.7);
@@ -341,6 +376,50 @@ select {
 
 .glass-dropdown .MuiAutocomplete-option:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: rgb(134, 239, 172);
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: rgb(252, 165, 165);
+}
+
+.alert-warning {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: rgb(253, 230, 138);
+}
+
+.alert-info {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: rgb(147, 197, 253);
 }
 
   ::-webkit-scrollbar { width: 4px; }

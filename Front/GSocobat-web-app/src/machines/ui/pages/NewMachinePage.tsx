@@ -1,22 +1,23 @@
-import { Autocomplete } from "../../common/Widgets/AutocompleteWidget";
+
 import Select from "react-select";
-import { customStyles } from "../../common/customStyles/SelectCustomStyles";
-import { useFuelDepotAutocomplete } from "../../fuelDepots/ui/hooks/UseFuelDepotsAutoComplete";
-import { useMachineAutocomplete } from "../../machines/ui/hooks/UseMachineAutoComplete";
-import { DateSelector } from "../../common/Widgets/DateSelectorWidget";
-import { useAddMachineReffil } from "./hooks/UseAddMachineReffil";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { Autocomplete } from "../../../common/Widgets/AutocompleteWidget";
+import { useFuelDepotAutocomplete } from "../../../fuelDepots/ui/hooks/UseFuelDepotsAutoComplete";
+import { useMachineAutocomplete } from "../hooks/UseMachineAutoComplete";
+import { customStyles } from "../../../common/customStyles/SelectCustomStyles";
+import { DateSelector } from "../../../common/Widgets/DateSelectorWidget";
+
+
 
 type Option = {
   value: boolean;
   label: string;
 };
 
-const NewMachineReffilsPage = () => {
+const NewMachinePage = () => {
   const options: Option[] = [{ label: "Oui", value: true }, { label: "Non", value: false }];
 
-  const { addMachineReffil, loading, error } = useAddMachineReffil();
+  //const { addMachine, loading, error } = useAddMachine();
 
   const [machineId, setMachineId] = useState<number>(0);
   const [fuelDepotId, setFuelDepotId] = useState<number>(0);
@@ -26,10 +27,10 @@ const NewMachineReffilsPage = () => {
 
   const handleAdd = async () => {
     if (machineId === 0 || fuelDepotId === 0 || quantity === 0) {
-     toast.error("Veuillez remplir tous les champs");
+      alert("Veuillez remplir tous les champs");
       return;
     }
-
+    /*
     const success = await addMachineReffil({
       assetId: machineId,
       fuelDepotId: fuelDepotId,
@@ -37,21 +38,17 @@ const NewMachineReffilsPage = () => {
       isFull: isFull,
       reffilDate: date,
     });
+    
 
     if (success) {
       console.log("Added successfully");
-      toast.success("Recharge enregistrée avec succès");
     }
-    else {
-       toast.error("Erreur lors de l'enregistrement");
-    }
+      */
   };
 
   return (
-    <div className="glass-card">
-      <div className="card-header">
-        <div className="card-title">Charger une machine</div>
-      </div>
+    <div className="modal-container">
+      <div className="card-title">Charger une machine</div>
 
       <div className="forms-column" style={{ marginTop: 16 }}>
 
@@ -94,7 +91,7 @@ const NewMachineReffilsPage = () => {
           <label className="glass-label">État de remplissage</label>
           <Select
             options={options}
-            onChange={(selected) => { setIsFull(selected?.value ?? false) }}
+            onChange={(selected) => {  setIsFull(selected?.value ?? false)} }
             placeholder="Est pleine ?"
             styles={customStyles}
             isClearable
@@ -104,15 +101,23 @@ const NewMachineReffilsPage = () => {
         {/* Date */}
         <div className="field">
           <label className="glass-label">Date</label>
-          <DateSelector selectedDate={new Date()} onChange={(d) => setDate(d ?? new Date())}></DateSelector>
+          <DateSelector selectedDate={new Date()}  onChange={(d) => setDate(d??new Date())}></DateSelector>
         </div>
-
-        <div className="form-footer">
+     
+         {/* Error 
+        {error && (
+          <div style={{ color: "red", marginTop: 10 }}>
+            {error}
+          </div>
+          
+        )}
+*/}
+        <div className="modal-footer">
           <button
             className="btn-primary"
             style={{ marginTop: 16 }}
             onClick={
-              handleAdd
+             handleAdd
             }
           >
             Enregistrer
@@ -123,4 +128,4 @@ const NewMachineReffilsPage = () => {
   );
 };
 
-export default NewMachineReffilsPage;
+export default NewMachinePage;

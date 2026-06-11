@@ -12,6 +12,10 @@ import { useEffect } from "react";
 import { useConstantsStore } from "./constants/ConstantsState";
 import MissionsPage from "./missions/ui/pages/MissionsPage";
 import DepotReffilsPages from "./DepotReffils/ui/pages/DepotReffilsPage";
+import NewAssetPage from "./machines/ui/pages/NewMachinePage";
+import NewMachineReffilsPage from "./machineReffil/ui/NewMachineReffilsPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const {fetchConstants} = useConstantsStore();
@@ -22,6 +26,7 @@ function App() {
   
   return (
     <>
+     <ToastContainer position="top-right" />
       <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -30,7 +35,9 @@ function App() {
           <Route path="/depots" element={<FuelDepotsPages />} />
           <Route path="/settings" element={<SettingsPages />} />
           <Route path="/assets" element={<AssetsPages/>} />
+          <Route path="/assets/new" element={<NewAssetPage/>} />
           <Route path="/machineReffils" element={<FuelReffilPages/>} />
+          <Route path="/machineReffils/new" element={<NewMachineReffilsPage/>} />
           <Route path="/depotReffils" element={<DepotReffilsPages/>} />
           <Route path="/missions" element={<MissionsPage/>} />
         </Route>

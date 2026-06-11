@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import OrdersTable from "../../components/tables/OrdersTable";
 import { useMachineReffilsStore } from "./state/MachineReffilsState";
 import MachineReffilsFilters from "./MachineReffilsFilterWidget";
-import { Modal } from "../../common/Widgets/Modal";
-import NewMachineReffilsPage from "./NewMachineReffilsPage";
 
 export default function MachineReffilsPages() {
-  const [open, setOpen] = useState(false);
   const { machinesReffils, fetchMachineReffils, loading } = useMachineReffilsStore();
   useEffect(() => {
     fetchMachineReffils();
@@ -19,13 +16,6 @@ export default function MachineReffilsPages() {
           <div className="card-title">Liste des recharges machines</div>
           <div className="card-sub">Gestion des remplissages</div>
         </div>
-
-        <button
-          className="btn-primary"
-          onClick={() => setOpen(true)}
-        >
-          + Charger une machine
-        </button>
       </div>
       <MachineReffilsFilters onApply={(filters: any) => {
         useMachineReffilsStore.setState({ filters });
@@ -54,9 +44,6 @@ export default function MachineReffilsPages() {
           },
         ]}
       />
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <NewMachineReffilsPage onClose={() => setOpen(false)} />
-      </Modal>
     </div>
   );
 }

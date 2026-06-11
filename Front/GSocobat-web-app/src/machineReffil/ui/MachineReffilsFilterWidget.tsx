@@ -1,11 +1,8 @@
 import { useState } from "react";
 import type { MachineReffilsRequestFilter } from "../domain/models/requestFilters/MachineReffilRequestFilter";
-import { useConstantsStore } from "../../constants/ConstantsState";
 import { FuelDepotTypeSelect } from "../../common/Widgets/ConstantSelects/FuelDepotTypeSelect";
 
 export default function MachineReffilsFilters({ onApply }: any) {
-  const constants = useConstantsStore((s) => s.constants);
-  console.log("CONSTANTS:", constants);
   const [filters, setFilters] = useState<MachineReffilsRequestFilter>({
     assetSerialNumber: "",
     depotName: "",

@@ -1,22 +1,32 @@
+import { useEffect, useState } from "react";
 import { navItems } from "../../data/nav";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
-type Props = {
-  activeNav: string;
-  setActiveNav: (value: string) => void;
-};
 
-export default function Sidebar({ activeNav, setActiveNav }: Props) {
+
+export default function Sidebar() {
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const sections = [
     { key: "main", label: "Principal" },
-    {key:"Activities", label: "Activité"},
-    {key:"Depot", label: "Dépots"},
-    {key:"Fuel", label:"Carburant"},
+    { key: "Activities", label: "Activité" },
+    { key: "Depot", label: "Dépots" },
+    { key: "Fuel", label: "Carburant" },
     { key: "system", label: "Système" },
-    
   ];
 
-const navigate = useNavigate();
+  // Auto-open parent when child route is active
+  useEffect(() => {
+    navItems.forEach((n) => {
+      if (n.children?.some((c) => c.path === location.pathname)) {
+        setOpenMenu(n.label);
+      }
+    });
+  }, [location.pathname]);
 
   return (
     <aside className="sidebar">
@@ -35,24 +45,72 @@ const navigate = useNavigate();
 
             {navItems
               .filter((n) => n.section === sec.key)
-              .map((n) => (
-                <div
-                  key={n.label}
-                  className={`nav-item ${
-                    activeNav === n.label ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setActiveNav(n.label);
-                    navigate(n.path);
-                  }}
-                >
-                  <span className="nav-icon">{n.icon}</span>
-                  <span>{n.label}</span>
-                  {n.badge && (
-                    <span className="nav-badge">{n.badge}</span>
-                  )}
-                </div>
-              ))}
+              .map((n) => {
+                const isOpen = openMenu === n.label;
+
+                const isParentActive =
+                  n.path === location.pathname ||
+                  n.children?.some((c) => c.path === location.pathname);
+
+                return (
+                  <div key={n.label}>
+                    {/* PARENT */}
+                    <div
+                      className={`nav-item ${
+                        isParentActive ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        if (n.children) {
+                          setOpenMenu(isOpen ? null : n.label);
+                          return;
+                        }
+
+                        if (n.path) navigate(n.path);
+                      }}
+                    >
+                      <span className="nav-icon">{n.icon}</span>
+                      <span>{n.label}</span>
+
+                      {n.children && (
+                        <span className="arrow">
+                          {isOpen ? (
+                            <FaChevronDown />
+                          ) : (
+                            <FaChevronRight />
+                          )}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* CHILDREN */}
+                    {n.children && isOpen && (
+                      <div className="nav-children">
+                        {n.children.map((child) => {
+                          const isChildActive =
+                            child.path === location.pathname;
+
+                          return (
+                            <div
+                              key={child.label}
+                              className={`nav-item nav-item--child ${
+                                isChildActive ? "active" : ""
+                              }`}
+                              onClick={() => {
+                                if (child.path) navigate(child.path);
+                              }}
+                            >
+                              <span className="nav-icon">
+                                {child.icon}
+                              </span>
+                              <span>{child.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
           </div>
         ))}
       </nav>
