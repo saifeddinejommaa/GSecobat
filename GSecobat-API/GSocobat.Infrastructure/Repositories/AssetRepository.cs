@@ -8,9 +8,10 @@ namespace GSocobat.Infrastructure.Repositories
     {
         private readonly GSecobatAppDbContext _context = context;
 
-        public Task AddAsync(Asset entity)
+        public async Task AddAsync(Asset entity)
         {
-            throw new NotImplementedException();
+            await _context.Assets.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
         public Task DeleteAsync(Asset entity)

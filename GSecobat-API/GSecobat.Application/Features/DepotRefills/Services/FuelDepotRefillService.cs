@@ -1,4 +1,5 @@
-﻿using GSecobat.Application.Features.DepotReffils.Repositories;
+﻿using GSecobat.Application.Common;
+using GSecobat.Application.Features.DepotReffils.Repositories;
 using GSecobat.Application.Features.DepotReffils.Requests;
 using GSecobat.Application.Features.DepotRefills.Repositories;
 using GSecobat.Application.Features.DepotRefills.Requests;
@@ -25,7 +26,7 @@ namespace GSecobat.Application.Features.DepotReffils.Services
             _depotReffilQueryRepository = fuelDepotReffilQueryRepository;
         }
 
-        public async Task<List<FuelDepotReffilResponse>> GetAllFuelDepotReffils(FuelDepotReffilRequestFilter filter)
+        public async Task<PagedResult<FuelDepotReffilResponse>> GetAllFuelDepotReffils(FuelDepotReffilRequestFilter filter)
         {
             return await _depotReffilQueryRepository.GetAllDepotReffils(filter);
         }

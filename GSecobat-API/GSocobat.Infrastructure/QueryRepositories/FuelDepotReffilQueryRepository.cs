@@ -1,14 +1,10 @@
 ﻿using Dapper;
+using GSecobat.Application.Common;
 using GSecobat.Application.Features.DepotRefills.Repositories;
 using GSecobat.Application.Features.DepotRefills.Requests;
 using GSecobat.Application.Features.DepotRefills.Responses;
-using GSecobat.Application.Features.FuelDepots.Responses;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GSocobat.Infrastructure.QueryRepositories
 {
@@ -21,21 +17,25 @@ namespace GSocobat.Infrastructure.QueryRepositories
             _dbConnection = dbContext;
         }
 
-        public async Task<List<FuelDepotReffilResponse>> GetAllDepotReffils(FuelDepotReffilRequestFilter filter)
+        public async Task<PagedResult<FuelDepotReffilResponse>> GetAllDepotReffils(FuelDepotReffilRequestFilter filter)
         {
             StringBuilder sql = new(
-             $"""
-            SELECT 
-                fdr."Id" {nameof(FuelDepotReffilResponse.Id)},
-                fdr."Quantity" {nameof(FuelDepotReffilResponse.Quantity)},
-                fdr."ReffilDate" {nameof(FuelDepotReffilResponse.ReffilDate)},
-                fd."DepotName" {nameof(FuelDepotReffilResponse.FuelDepotName)},
-                fd."Reference" {nameof(FuelDepotReffilResponse.FuelDepotRef)}
-            FROM "FuelDepotRefill" fdr
-            INNER JOIN "FuelDepot" fd ON fdr."FuelDepotId" = fd."Id"
-            """);
+                $"""
+                SELECT
+                    COUNT(*) OVER() {nameof(FuelDepotReffilResponse.Total)},
+                    fdr."Id" {nameof(FuelDepotReffilResponse.Id)},
+                    fdr."Quantity" {nameof(FuelDepotReffilResponse.Quantity)},
+                    fdr."ReffilDate" {nameof(FuelDepotReffilResponse.ReffilDate)},
+                    fd."DepotName" {nameof(FuelDepotReffilResponse.FuelDepotName)},
+                    fd."Reference" {nameof(FuelDepotReffilResponse.FuelDepotRef)}
+                FROM "FuelDepotRefill" fdr
+                INNER JOIN "FuelDepot" fd ON fdr."FuelDepotId" = fd."Id"
+                WHERE 1=1
+                """);
 
             var parameters = new DynamicParameters();
+            parameters.Add("PageSize", filter.PageSize);
+            parameters.Add("Offset", (filter.PageNumber - 1) * filter.PageSize);
 
             if (filter.FuelDepotId > 0)
             {
@@ -55,12 +55,26 @@ namespace GSocobat.Infrastructure.QueryRepositories
                 parameters.Add("FuelDepotRef", $"%{filter.FuelDepotRef}%");
             }
 
+            sql.Append(
+                """
+                 ORDER BY fdr."Id"
+                LIMIT @PageSize OFFSET @Offset
+                """);
+
             var result = await _dbConnection.QueryAsync<FuelDepotReffilResponse>(
                 sql.ToString(),
                 parameters
             );
 
-            return result.ToList();
+            int total = result.Any() ? result.ElementAt(0).Total : 0;
+
+            return new PagedResult<FuelDepotReffilResponse>
+            {
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalCount = total,
+                Items = result.ToList()
+            };
         }
     }
 }

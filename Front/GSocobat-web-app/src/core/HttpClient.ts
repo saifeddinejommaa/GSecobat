@@ -29,10 +29,15 @@ export async function http<T>(
     body: !isGet && body ? JSON.stringify(body) : undefined,
   });
 
+  const data = await response.json().catch(() => null);
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(error || "HTTP Error");
+
+    throw {
+      code: data?.Code ?? response.status,
+      message: data?.ResponseMessage ?? "HTTP Error",
+      data: data?.Response ?? null,
+    };
   }
 
-  return response.json();
+  return data as T;
 }

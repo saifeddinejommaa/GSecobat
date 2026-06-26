@@ -1,7 +1,9 @@
 ﻿#nullable enable
+using System.Text.Json.Serialization;
+
 namespace GSecobat.Application.Features.Assets.Responses
 {
-    public class AssetResponse
+    public class AssetForListResponse
     {
         public required int Id { get; set; }
         public string? SerialNumber { get; set; }
@@ -13,5 +15,7 @@ namespace GSecobat.Application.Features.Assets.Responses
         public string? Mch { get; set; }
         public string? AssetStatusLabel { get; set; }
         public double? CurrentFuelQuantity { get; set; }
+        public double FuelCapacity { get; set; }
+        public int Total { get; set; }
     }
 }

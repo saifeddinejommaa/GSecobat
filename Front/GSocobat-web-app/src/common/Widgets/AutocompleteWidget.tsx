@@ -2,31 +2,45 @@ import { useState } from "react";
 import Select from "react-select";
 import { customStyles } from "../../common/customStyles/SelectCustomStyles";
 
-type Props<T> = {
-  placeholder?: string;
-  width?: number | string;
-
+type SearchModeProps<T> = {
   useSearch: (query: string) => {
     results: T[];
     loading: boolean;
   };
+};
 
+type LocalModeProps<T> = {
+  items: T[];
+};
+
+type Props<T> = {
+  placeholder?: string;
+  width?: number | string;
   getLabel: (item: T) => string;
   onSelect: (item: T) => void;
-};
+} & (SearchModeProps<T> | LocalModeProps<T>);
 
 export function Autocomplete<T>({
   placeholder = "Rechercher...",
   width = 400,
-  useSearch,
   getLabel,
   onSelect,
+  ...props
 }: Props<T>) {
   const [query, setQuery] = useState("");
 
-  const { results, loading } = useSearch(query);
+  const isSearchMode = "useSearch" in props;
 
-  const options = results.map((item) => ({
+  const searchResult = isSearchMode
+    ? props.useSearch(query)
+    : {
+        loading: false,
+        results: props.items.filter((x) =>
+          getLabel(x).toLowerCase().includes(query.toLowerCase())
+        ),
+      };
+
+  const options = searchResult.results.map((item) => ({
     label: getLabel(item),
     value: item,
   }));
@@ -35,19 +49,19 @@ export function Autocomplete<T>({
     <div style={{ width }}>
       <Select
         placeholder={placeholder}
-        isLoading={loading}
+        isLoading={searchResult.loading}
         options={options}
+        styles={customStyles}
+        filterOption={() => true}
         onInputChange={(value) => {
           setQuery(value);
           return value;
         }}
-        styles={customStyles}
         onChange={(selected) => {
           if (selected) {
             onSelect(selected.value);
           }
         }}
-        filterOption={() => true}
       />
     </div>
   );

@@ -4,10 +4,21 @@ import { useDepotsStore } from "../state/FuelDepotsState";
 import FuelDepotFilters from "../widgets/fuelDepotFilterWidget";
 
 export default function FuelDepotsPages() {
-  const { depots, fetchDepots, loading } = useDepotsStore();
+  const { depots, fetchDepots,filters, loading } = useDepotsStore();
   useEffect(() => {
     fetchDepots();
   }, []);
+
+  const handlePageChange = (page: number) => {
+      useDepotsStore.setState((state) => ({
+        filters: {
+          ...state.filters,
+          pageNumber: page,
+        },
+      }));
+  
+      fetchDepots();
+    };
   
   return (
     <div className="glass-card">
@@ -16,7 +27,11 @@ export default function FuelDepotsPages() {
     fetchDepots();
   }}  />
      <OrdersTable
-  data={depots}
+  data={depots.items}
+   pageNumber={filters.pageNumber}
+        pageSize={filters.pageSize}
+        totalCount={depots?.totalCount ?? 0}
+        onPageChange={handlePageChange}
   columns={[
     { key: "reference", label: "Reference" },
     { key: "depotName", label: "Nom du dépôt" },

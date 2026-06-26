@@ -26,7 +26,7 @@ const NewMachineReffilsPage = () => {
 
   const handleAdd = async () => {
     if (machineId === 0 || fuelDepotId === 0 || quantity === 0) {
-     toast.error("Veuillez remplir tous les champs");
+      toast.error("Veuillez remplir tous les champs");
       return;
     }
 
@@ -39,11 +39,10 @@ const NewMachineReffilsPage = () => {
     });
 
     if (success) {
-      console.log("Added successfully");
       toast.success("Recharge enregistrée avec succès");
     }
     else {
-       toast.error("Erreur lors de l'enregistrement");
+      toast.error(error);
     }
   };
 
@@ -109,13 +108,14 @@ const NewMachineReffilsPage = () => {
 
         <div className="form-footer">
           <button
+            disabled={loading}
             className="btn-primary"
             style={{ marginTop: 16 }}
             onClick={
               handleAdd
             }
           >
-            Enregistrer
+            {loading ? 'Enregistrement..' : 'Enregistrer'}
           </button>
         </div>
       </div>

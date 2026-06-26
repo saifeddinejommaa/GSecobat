@@ -27,5 +27,11 @@
             if (value == 0)
                 throw new BusinessException(message);
         }
+
+        public static void AgainstUpperTo(double value, double to, string message)
+        {
+            if (value > to)
+                throw new BusinessException(message);
+        }
     }
 }

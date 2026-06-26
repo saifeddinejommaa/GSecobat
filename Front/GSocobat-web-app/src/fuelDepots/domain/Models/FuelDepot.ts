@@ -1,6 +1,6 @@
 export type FuelDepot = {
   id: number;
-  depotName?: string | null;
+  depotName: string;
   capacity: number;
   currentLevel?: number | null;
   reference: string;

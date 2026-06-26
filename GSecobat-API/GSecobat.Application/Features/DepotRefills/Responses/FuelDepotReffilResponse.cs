@@ -7,5 +7,6 @@
         public required string FuelDepotRef { get; set; }
         public DateTime ReffilDate { get; set; }
         public double Quantity { get; set; }
+        public int Total { get; set; }
     }
 }

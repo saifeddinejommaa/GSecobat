@@ -7,6 +7,6 @@ namespace GSecobat.Application.Features.Assets
     [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
     public static partial class AssetMapper
     {
-        public static partial AssetResponse ToAssetResponse(this Asset Asset);
+        public static partial AssetForListResponse ToAssetResponse(this Asset Asset);
     }
 }

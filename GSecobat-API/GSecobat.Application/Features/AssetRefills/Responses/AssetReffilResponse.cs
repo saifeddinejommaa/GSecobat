@@ -9,5 +9,6 @@
         public int UserId { get; set; }
         public double Quantity { get; set; }
         public int IsFull { get; set; }
+        public int Total { get; set; }
     }
 }

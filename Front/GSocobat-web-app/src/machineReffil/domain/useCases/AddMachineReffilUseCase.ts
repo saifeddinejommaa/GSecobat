@@ -3,10 +3,11 @@ import type { AddMachineReffilRequest } from "../../data/requests/AddMachineReff
 
 export const AddMachineReffilUseCase = async (request: AddMachineReffilRequest) => {
   const response = await MachineReffilRepository.addMachineReffil(request);
-
+console.log(response)
   if (response.Code !== 200) {
-    throw new Error(response.ResponseMessage);
+    console.log(response)
+    throw new Error(JSON.stringify(response));
   }
 
   return response.Response;
-};
+}; 

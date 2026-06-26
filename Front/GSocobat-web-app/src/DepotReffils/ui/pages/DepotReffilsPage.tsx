@@ -4,11 +4,20 @@ import OrdersTable from "../../../components/tables/OrdersTable";
 import DepotReffilsFilters from "../widgets/DepotReffilsFilterWidget";
 
 export default function DepotReffilsPages() {
-  const { DepotReffils, fetchDepotReffils, loading } = useDepotReffilsStore();
+  const { DepotReffils, fetchDepotReffils, filters, loading } = useDepotReffilsStore();
   useEffect(() => {
     fetchDepotReffils();
   }, []);
+  const handlePageChange = (page: number) => {
+      useDepotReffilsStore.setState((state) => ({
+        filters: {
+          ...state.filters,
+          pageNumber: page,
+        },
+      }));
   
+      fetchDepotReffils();
+    };
   return (
     <div className="glass-card">
         <DepotReffilsFilters onApply={(filters:any) => {
@@ -16,7 +25,11 @@ export default function DepotReffilsPages() {
             fetchDepotReffils();
           }}  />
      <OrdersTable
-  data={DepotReffils}
+  data={DepotReffils?.items ?? []}
+        pageNumber={filters.pageNumber}
+        pageSize={filters.pageSize}
+        totalCount={DepotReffils?.totalCount ?? 0}
+   onPageChange={handlePageChange}
   columns={[
     { key: "fuelDepotRef", label: "Référence" },
     { key: "fuelDpotName", label: "Nom Dépot" },

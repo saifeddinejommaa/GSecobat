@@ -15,7 +15,7 @@ export default function Sidebar() {
     { key: "main", label: "Principal" },
     { key: "Activities", label: "Activité" },
     { key: "Depot", label: "Dépots" },
-    { key: "Fuel", label: "Carburant" },
+    { key: "Fuel", label: "Recharge Carburant" },
     { key: "system", label: "Système" },
   ];
 

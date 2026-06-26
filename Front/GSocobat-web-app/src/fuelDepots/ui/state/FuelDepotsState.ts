@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import type { FuelDepot } from "../../domain/Models/FuelDepot";
 import { FuelDepotRepository } from "../../data/FuelDepotRespository";
+import type { PagedResult } from "../../../core/PagedResult";
 
 type FuelDepotsState = {
-  depots: FuelDepot[];
+  depots: PagedResult<FuelDepot>;
   loading: boolean;
 
   filters: {
@@ -11,6 +12,8 @@ type FuelDepotsState = {
     assetStatus?: number;
     serialNumber?: string;
     mch?: string;
+    pageNumber: number;
+    pageSize: number;
   };
 
   setFilter: (key: string, value: any) => void;
@@ -21,10 +24,13 @@ type FuelDepotsState = {
 
 
 export const useDepotsStore = create<FuelDepotsState>((set, get) => ({
-  depots: [],
+  depots: {items: [], pageNumber:0,pageSize:10,totalCount:0},
   loading: false,
 
-  filters: {},
+  filters: {
+    pageNumber: 1,
+    pageSize: 10
+  },
 
   setFilter: (key, value) =>
     set((state) => ({
@@ -34,7 +40,8 @@ export const useDepotsStore = create<FuelDepotsState>((set, get) => ({
       },
     })),
 
-  clearFilters: () => set({ filters: {} }),
+  clearFilters: () => set({ filters: {pageNumber:1,
+    pageSize:10} }),
 
   fetchDepots: async () => {
     set({ loading: true });

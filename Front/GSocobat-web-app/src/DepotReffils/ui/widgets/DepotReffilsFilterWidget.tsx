@@ -27,7 +27,6 @@ export default function DepotReffilsFilters({ onApply}: Props) {
       <div className="card-header">
         <div>
           <div className="card-title">Filters</div>
-          <div className="card-sub">Filter fuel depots list</div>
         </div>
       </div>
 

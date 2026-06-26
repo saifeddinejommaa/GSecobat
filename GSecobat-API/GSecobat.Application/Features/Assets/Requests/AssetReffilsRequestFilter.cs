@@ -1,6 +1,8 @@
-﻿namespace GSecobat.Application.Features.Assets.Requests
+﻿using GSecobat.Application.Common;
+
+namespace GSecobat.Application.Features.Assets.Requests
 {
-    public class AssetReffilsRequestFilter
+    public class AssetReffilsRequestFilter : PagedRequest
     {
         public DateTime? ReffilDate { get; set; }
         public string? AssetSerialNumber { get; set; }

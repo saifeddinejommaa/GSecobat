@@ -1,6 +1,8 @@
-﻿namespace GSecobat.Application.Features.Assets.Requests
+﻿using GSecobat.Application.Common;
+
+namespace GSecobat.Application.Features.Assets.Requests
 {
-    public class AssetsRequestFilter
+    public class AssetsRequestFilter : PagedRequest
     {
         public int? AssetType { get; set; }
         public int? AssetStatus { get; set; }

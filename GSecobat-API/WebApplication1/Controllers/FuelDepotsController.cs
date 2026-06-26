@@ -1,5 +1,4 @@
-using GSecobat.Application.Features.AssetRefills.Responses;
-using GSecobat.Application.Features.Assets.Requests;
+using GSecobat.Application.Common;
 using GSecobat.Application.Features.DepotReffils.Requests;
 using GSecobat.Application.Features.DepotReffils.Services;
 using GSecobat.Application.Features.DepotRefills.Requests;
@@ -31,19 +30,19 @@ namespace GSecobat.Api.Controllers
         }
 
         [HttpGet("all", Name = nameof(GetAllFuelDepots))]
-        [ProducesResponseType(typeof(List<FuelDepotsListResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PagedResult<FuelDepotsListResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllFuelDepots([FromQuery] FuelDepotRequestFilter filter)
         {
-            List<FuelDepotsListResponse> response = await _fuelDepotService.GetFuelDepotsList(filter);
+            PagedResult<FuelDepotsListResponse> response = await _fuelDepotService.GetFuelDepotsList(filter);
 
             return Ok(response);
         }
 
         [HttpGet("all-reffils", Name = nameof(GetAllDepotReffils))]
-        [ProducesResponseType(typeof(List<FuelDepotReffilResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PagedResult<FuelDepotReffilResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllDepotReffils([FromQuery] FuelDepotReffilRequestFilter filter)
         {
-            List<FuelDepotReffilResponse> response = await _fuelDepotRefillService.GetAllFuelDepotReffils(filter);
+            PagedResult<FuelDepotReffilResponse> response = await _fuelDepotRefillService.GetAllFuelDepotReffils(filter);
 
             return Ok(response);
         }

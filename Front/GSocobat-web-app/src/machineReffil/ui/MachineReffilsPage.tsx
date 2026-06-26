@@ -4,7 +4,7 @@ import { useMachineReffilsStore } from "./state/MachineReffilsState";
 import MachineReffilsFilters from "./MachineReffilsFilterWidget";
 
 export default function MachineReffilsPages() {
-  const { machinesReffils, fetchMachineReffils, loading } = useMachineReffilsStore();
+  const { machinesReffils, fetchMachineReffils, filters, loading } = useMachineReffilsStore();
   useEffect(() => {
     fetchMachineReffils();
   }, []);
@@ -22,7 +22,20 @@ export default function MachineReffilsPages() {
         fetchMachineReffils();
       }} />
       <OrdersTable
-        data={machinesReffils}
+        data={machinesReffils?.items ?? []}
+        pageSize={filters.pageSize}
+        pageNumber={filters.pageNumber}
+        totalCount={machinesReffils.totalCount}
+        onPageChange={(page) => {
+          useMachineReffilsStore.setState((state) => ({
+            filters: {
+              ...state.filters,
+              pageNumber: page,
+            },
+          }));
+
+          fetchMachineReffils();
+        }}
         columns={[
           {
             key: "reffilDate", label: "Date", render: (item) =>

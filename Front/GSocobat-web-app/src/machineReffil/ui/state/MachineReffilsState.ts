@@ -2,9 +2,10 @@ import { create } from "zustand";
 import type { MachineReffil } from "../../domain/models/MachineReffil";
 import { MachineReffilRepository } from "../../data/Repositories/MachineReffilRepository";
 import type { MachineReffilsRequestFilter } from "../../domain/models/requestFilters/MachineReffilRequestFilter";
+import type { PagedResult } from "../../../core/PagedResult";
 
 type MachineReffilsState = {
-  machinesReffils: MachineReffil[];
+  machinesReffils: PagedResult<MachineReffil>;
   loading: boolean;
   filters: MachineReffilsRequestFilter;
 
@@ -14,9 +15,12 @@ type MachineReffilsState = {
 };
 
 export const useMachineReffilsStore = create<MachineReffilsState>((set, get) => ({
-  machinesReffils: [],
+  machinesReffils:{items: [], pageNumber:0,pageSize:10,totalCount:0},
   loading: false,
-  filters: {},
+  filters: {
+    pageNumber:1,
+    pageSize:10
+  },
   setFilter: (key, value) =>
     set((state) => ({
       filters: {
@@ -25,7 +29,8 @@ export const useMachineReffilsStore = create<MachineReffilsState>((set, get) => 
       },
     })),
 
-  clearFilters: () => set({ filters: {} }),
+  clearFilters: () => set({ filters: {pageNumber:1,
+    pageSize:10} }),
 
   fetchMachineReffils: async () => {
     set({ loading: true });

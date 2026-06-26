@@ -5,6 +5,8 @@ import { AssetStatusesSelect } from "../../../common/Widgets/ConstantSelects/Ass
 
 export default function MachinesFilters({ onApply }: any) {
   const [filters, setFilters] = useState<AssetsRequestFilter>({
+    pageNumber:1,
+    pageSize:10,
     assetStatus: undefined,
     serialNumber: "",
     assetTypeId: undefined,

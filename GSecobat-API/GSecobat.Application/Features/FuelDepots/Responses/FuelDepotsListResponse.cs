@@ -16,5 +16,6 @@ namespace GSecobat.Application.Features.FuelDepots.Responses
         public required string Type { get; set; }
 
         public string? LocationAddress { get; set; }
+        public int Total { get; set; }
     }
 }

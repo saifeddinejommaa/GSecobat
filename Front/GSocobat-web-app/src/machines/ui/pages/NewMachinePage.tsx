@@ -1,126 +1,119 @@
-
-import Select from "react-select";
 import { useState } from "react";
-import { Autocomplete } from "../../../common/Widgets/AutocompleteWidget";
-import { useFuelDepotAutocomplete } from "../../../fuelDepots/ui/hooks/UseFuelDepotsAutoComplete";
-import { useMachineAutocomplete } from "../hooks/UseMachineAutoComplete";
-import { customStyles } from "../../../common/customStyles/SelectCustomStyles";
+import { toast } from "react-toastify";
 import { DateSelector } from "../../../common/Widgets/DateSelectorWidget";
-
-
-
-type Option = {
-  value: boolean;
-  label: string;
-};
+import { useAddMachine } from "../hooks/useAddMachine";
+import { AssetTypesSelect } from "../../../common/Widgets/ConstantSelects/AssetTypesSelect";
 
 const NewMachinePage = () => {
-  const options: Option[] = [{ label: "Oui", value: true }, { label: "Non", value: false }];
+  const { addMachine, loading, error } = useAddMachine();
 
-  //const { addMachine, loading, error } = useAddMachine();
-
-  const [machineId, setMachineId] = useState<number>(0);
-  const [fuelDepotId, setFuelDepotId] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(0);
-  const [isFull, setIsFull] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>(new Date());
+  const [serialNumber, setSerialNumber] = useState("");
+  const [assetTypeId, setAssetTypeId] = useState<number| undefined>(0);
+  const [purchaseDate, setPurchaseDate] = useState<Date>(new Date());
+  const [fiscalHorsepower, setFiscalHorsepower] = useState<number>(0);
+  const [mch, setMch] = useState("");
+  const [currentFuelQuantity, setCurrentFuelQuantity] = useState<number>(0);
 
   const handleAdd = async () => {
-    if (machineId === 0 || fuelDepotId === 0 || quantity === 0) {
-      alert("Veuillez remplir tous les champs");
+    if (
+      !serialNumber ||
+      assetTypeId === 0 ||
+      assetTypeId === undefined ||
+      fiscalHorsepower <= 0
+    ) {
+      toast.error("Veuillez remplir tous les champs obligatoires");
       return;
     }
-    /*
-    const success = await addMachineReffil({
-      assetId: machineId,
-      fuelDepotId: fuelDepotId,
-      quantity: quantity,
-      isFull: isFull,
-      reffilDate: date,
+
+    const success = await addMachine({
+      serialNumber,
+      assetTypeId,
+      purchaseDate: purchaseDate?.toISOString() ?? null,
+      fiscalHorsepower,
+      mch: mch || null,
+      currentFuelQuantity,
     });
-    
 
     if (success) {
-      console.log("Added successfully");
+      toast.success("Machine créée avec succès");
+    } else {
+      toast.error(error);
     }
-      */
   };
 
   return (
-    <div className="modal-container">
-      <div className="card-title">Charger une machine</div>
+    <div className="glass-card">
+      <div className="card-header">
+        <div className="card-title">Nouvelle machine</div>
+      </div>
 
       <div className="forms-column" style={{ marginTop: 16 }}>
 
-        {/* Machine */}
+        {/* Numéro de série */}
         <div className="field">
-          <label className="glass-label">Machine</label>
-          <Autocomplete
-            useSearch={useMachineAutocomplete}
-            getLabel={(m) => m.serialNumber}
-            onSelect={(machine) => {
-              setMachineId(machine.id)
-            }}
-            placeholder="Rechercher une machine..."
-            width={400}
+          <label className="glass-label">Numéro de série</label>
+          <input
+            type="text"
+            value={serialNumber}
+            onChange={(e) => setSerialNumber(e.target.value)}
+            placeholder="Numéro de série"
           />
         </div>
 
-        {/* Dépôt */}
+        {/* Type */}
         <div className="field">
-          <label className="glass-label">Dépôt</label>
-          <Autocomplete
-            useSearch={useFuelDepotAutocomplete}
-            getLabel={(m) => m.reference}
-            onSelect={(fuelDepot) => {
-              setFuelDepotId(fuelDepot.id)
-            }}
-            placeholder="Rechercher un dépôt..."
-            width={400}
+          <label className="glass-label">Type</label>
+           <AssetTypesSelect onChange={(e)=> setAssetTypeId(e)}></AssetTypesSelect>
+        </div>
+
+        {/* Date achat */}
+        <div className="field">
+          <label className="glass-label">Date d'achat</label>
+          <DateSelector
+            selectedDate={purchaseDate}
+            onChange={(d) => setPurchaseDate(d?? new Date())}
           />
         </div>
 
-        {/* Quantité */}
+        {/* Puissance fiscale */}
         <div className="field">
-          <label className="glass-label">Quantité</label>
-          <input type="number" placeholder="Quantité" onChange={(e) => setQuantity(Number(e.target.value))} />
-        </div>
-
-        {/* Est pleine */}
-        <div className="field">
-          <label className="glass-label">État de remplissage</label>
-          <Select
-            options={options}
-            onChange={(selected) => {  setIsFull(selected?.value ?? false)} }
-            placeholder="Est pleine ?"
-            styles={customStyles}
-            isClearable
+          <label className="glass-label">Puissance fiscale</label>
+          <input
+            type="number"
+            value={fiscalHorsepower}
+            onChange={(e) => setFiscalHorsepower(Number(e.target.value))}
           />
+        </div>
 
-        </div>
-        {/* Date */}
+        {/* MCH */}
         <div className="field">
-          <label className="glass-label">Date</label>
-          <DateSelector selectedDate={new Date()}  onChange={(d) => setDate(d??new Date())}></DateSelector>
+          <label className="glass-label">MCH</label>
+          <input
+            type="text"
+            value={mch}
+            onChange={(e) => setMch(e.target.value)}
+            placeholder="MCH"
+          />
         </div>
-     
-         {/* Error 
-        {error && (
-          <div style={{ color: "red", marginTop: 10 }}>
-            {error}
-          </div>
-          
-        )}
-*/}
-        <div className="modal-footer">
-          <button
-            className="btn-primary"
-            style={{ marginTop: 16 }}
-            onClick={
-             handleAdd
+
+        <div className="field">
+          <label className="glass-label">Capacité carburant</label>
+          <input
+            type="number"
+            value={currentFuelQuantity}
+            onChange={(e) =>
+              setCurrentFuelQuantity(Number(e.target.value))
             }
+          />
+        </div>
+
+        <div className="form-footer">
+          <button
+            disabled={loading}
+            className="btn-primary"
+            onClick={handleAdd}
           >
-            Enregistrer
+            {loading ? "Enregistrement..." : "Créer"}
           </button>
         </div>
       </div>

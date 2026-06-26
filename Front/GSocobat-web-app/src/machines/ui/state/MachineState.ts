@@ -2,9 +2,10 @@ import { create } from "zustand";
 import type { Machine } from "../Models/Machine";
 import { GetAssetsUseCase } from "../../domain/GetAssetsUseCase";
 import type { AssetsRequestFilter } from "../../domain/models/AssetsRequestFilter";
+import type { PagedResult } from "../../../core/PagedResult";
 
 type MachineState = {
-  machines: Machine[];
+  machines: PagedResult<Machine>;
   loading: boolean;
 
   filters: AssetsRequestFilter;
@@ -17,10 +18,12 @@ type MachineState = {
 
 
 export const useMachineStore = create<MachineState>((set, get) => ({
-  machines: [],
+  machines: {items: [], pageNumber:0,pageSize:10,totalCount:0},
   loading: false,
 
   filters: {
+    pageNumber:1,
+    pageSize:10
   },
 
   setFilter: (key, value) =>
@@ -31,7 +34,8 @@ export const useMachineStore = create<MachineState>((set, get) => ({
       },
     })),
 
-  clearFilters: () => set({ filters: {} }),
+  clearFilters: () => set({ filters: {pageNumber:1,
+    pageSize:10} }),
 
   fetchMachines: async () => {
     set({ loading: true });

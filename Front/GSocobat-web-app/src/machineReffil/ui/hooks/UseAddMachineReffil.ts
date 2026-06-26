@@ -9,7 +9,6 @@ export const useAddMachineReffil = () => {
   const addMachineReffil = async (request: AddMachineReffilRequest) => {
     setLoading(true);
     setError(null);
-
     try {
       const success = await AddMachineReffilUseCase(request);
 
@@ -21,6 +20,7 @@ export const useAddMachineReffil = () => {
     } catch (e: any) {
       setError(e.message ?? "Unexpected error");
       return false;
+
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 using Dapper;
+using GSecobat.Application.Common;
 using GSecobat.Application.Features.FuelDepots.Repositories;
 using GSecobat.Application.Features.FuelDepots.Requests;
 using GSecobat.Application.Features.FuelDepots.Responses;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace GSecobat.Infrastructure.QueryRepositories
 {
-    public class FuelDepotQueryRepository :IFuelDepotQueryRepository
+    public class FuelDepotQueryRepository : IFuelDepotQueryRepository
     {
         private readonly IDbConnection _dbConnection;
 
@@ -16,11 +17,12 @@ namespace GSecobat.Infrastructure.QueryRepositories
             _dbConnection = dbConnection;
         }
 
-        public async Task<List<FuelDepotsListResponse>> GetFuelDepotsList(FuelDepotRequestFilter filter)
+        public async Task<PagedResult<FuelDepotsListResponse>> GetFuelDepotsList(FuelDepotRequestFilter filter)
         {
             StringBuilder sql = new(
             $"""
-            SELECT 
+            SELECT
+                COUNT(*) OVER() {nameof(FuelDepotsListResponse.Total)},
                 a."Id" {nameof(FuelDepotsListResponse.Id)},
                 a."Reference" {nameof(FuelDepotsListResponse.Reference)},
                 a."CurrentLevel" {nameof(FuelDepotsListResponse.CurrentLevel)},
@@ -31,8 +33,11 @@ namespace GSecobat.Infrastructure.QueryRepositories
             FROM "FuelDepot" a
             INNER JOIN "FuelDepotType" t on t."Id" = a."TypeId"
             INNER JOIN "Location" l on l."Id" = a."LocationId"
+            WHERE 1=1
             """);
             var parameters = new DynamicParameters();
+            parameters.Add("PageSize", filter.PageSize);
+            parameters.Add("Offset", (filter.PageNumber - 1) * filter.PageSize);
 
             if (!string.IsNullOrWhiteSpace(filter.Reference))
             {
@@ -58,12 +63,26 @@ namespace GSecobat.Infrastructure.QueryRepositories
                 parameters.Add("Name", $"%{filter.Name}%");
             }
 
+            sql.Append(
+                """
+                 ORDER BY a."Id"
+                LIMIT @PageSize OFFSET @Offset
+                """);
+
             var result = await _dbConnection.QueryAsync<FuelDepotsListResponse>(
                 sql.ToString(),
                 parameters
             );
 
-            return result.ToList();
+            int total = result.Any() ? result.ElementAt(0).Total : 0;
+
+            return new PagedResult<FuelDepotsListResponse>
+            {
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalCount = total,
+                Items = result.ToList()
+            };
         }
     }
 }

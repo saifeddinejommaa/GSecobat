@@ -6,6 +6,8 @@ using GSecobat.Application.Features.FuelDepots.Repositories;
 using GSecobat.Application.Features.Assets.Requests;
 using GSecobat.Application.Features.AssetRefills.Responses;
 using GSecobat.Application.Features.AssetRefills.Repositories;
+using GSecobat.Domain.Exceptions;
+using GSecobat.Application.Common;
 
 namespace GSecobat.Application.Features.AssetReffil.Services
 {
@@ -37,14 +39,19 @@ namespace GSecobat.Application.Features.AssetReffil.Services
                 IsFull = request.IsFull ? 1 : 0,
             };
 
-            Asset assetReffil = await _assetRepository.GetAssetById(request.AssetId);
+            Asset asset = await _assetRepository.GetAssetById(request.AssetId);
+
+            Guard.AgainstUpperTo(asset.CurrentFuelQuantity + request.Quantity,
+                    asset.FuelCapacity,
+                    "La capcité de cette machine est dépassé.");
+
             if (request.IsFull)
             {
-                assetReffil.CurrentFuelQuantity = request.Quantity;
+                asset.CurrentFuelQuantity = request.Quantity;
             }
             else
             {
-                assetReffil.CurrentFuelQuantity += request.Quantity;
+                asset.CurrentFuelQuantity += request.Quantity;
             }
 
             FuelDepot? fuelDepot = await _fuelDepotRepository.GetByIdAsync(request.FuelDepotId);
@@ -55,11 +62,11 @@ namespace GSecobat.Application.Features.AssetReffil.Services
             return true;
         }
 
-        public async Task<List<AssetReffilResponse>> GetAllAssetRefills(AssetReffilsRequestFilter request)
+        public async Task<PagedResult<AssetReffilResponse>> GetAllAssetRefills(AssetReffilsRequestFilter request)
         {
-            IEnumerable<AssetReffilResponse> assetReffils = await _fuelAssetReffitQueryRepository.GetAllAssetReffils(request);
+            PagedResult<AssetReffilResponse> assetReffils = await _fuelAssetReffitQueryRepository.GetAllAssetReffils(request);
 
-            return assetReffils.ToList();
+            return assetReffils;
         }
     }
 }

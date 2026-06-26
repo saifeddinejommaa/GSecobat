@@ -1,6 +1,8 @@
-﻿namespace GSecobat.Application.Features.FuelDepots.Requests
+﻿using GSecobat.Application.Common;
+
+namespace GSecobat.Application.Features.FuelDepots.Requests
 {
-    public class FuelDepotRequestFilter
+    public class FuelDepotRequestFilter: PagedRequest
     {
         public string? Reference { get; set; }
 

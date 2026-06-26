@@ -8,6 +8,8 @@ export default function MachineReffilsFilters({ onApply }: any) {
     depotName: "",
     fuelDepotTypeId: undefined,
     reffilDate: "",
+    pageNumber:0,
+    pageSize:10
   });
 
   const handleChange = (key: string, value: string) => {
@@ -22,7 +24,6 @@ export default function MachineReffilsFilters({ onApply }: any) {
       <div className="card-header">
         <div>
           <div className="card-title">Filters</div>
-          <div className="card-sub">Filter assets list</div>
         </div>
       </div>
 

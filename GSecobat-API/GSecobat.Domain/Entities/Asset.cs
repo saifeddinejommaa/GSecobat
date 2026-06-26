@@ -12,6 +12,7 @@ namespace GSecobat.Domain.Entities
         public int AssetStatusId { get; set; }
         public DateOnly? PurchaseDate { get; set; }
         public int? FiscalHorsepower { get; set; }
-        public double? CurrentFuelQuantity { get; set; }
+        public double CurrentFuelQuantity { get; set; }
+        public double FuelCapacity { get; set; }
     }
 }

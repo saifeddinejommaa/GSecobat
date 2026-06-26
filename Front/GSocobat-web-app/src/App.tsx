@@ -16,6 +16,7 @@ import NewAssetPage from "./machines/ui/pages/NewMachinePage";
 import NewMachineReffilsPage from "./machineReffil/ui/NewMachineReffilsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewDepotReffilPage from "./DepotReffils/ui/pages/NewDepotReffilPage";
 
 function App() {
   const {fetchConstants} = useConstantsStore();
@@ -39,6 +40,7 @@ function App() {
           <Route path="/machineReffils" element={<FuelReffilPages/>} />
           <Route path="/machineReffils/new" element={<NewMachineReffilsPage/>} />
           <Route path="/depotReffils" element={<DepotReffilsPages/>} />
+          <Route path="/depotReffils/new" element={<NewDepotReffilPage/>} />
           <Route path="/missions" element={<MissionsPage/>} />
         </Route>
       </Routes>
