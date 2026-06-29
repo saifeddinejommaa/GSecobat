@@ -92,3 +92,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+Console.WriteLine($"Environment = {builder.Environment.EnvironmentName}");
+
+Console.WriteLine(
+    $"Connection = {builder.Configuration.GetConnectionString("DefaultConnection")}");
