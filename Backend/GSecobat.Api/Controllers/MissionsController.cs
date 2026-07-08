@@ -1,4 +1,5 @@
-﻿using GSecobat.Application.Features.Missions.Requests;
+﻿using GSecobat.Application.Common;
+using GSecobat.Application.Features.Missions.Requests;
 using GSecobat.Application.Features.Missions.Responses;
 using GSecobat.Application.Features.Missions.Services;
 using MediatR;
@@ -24,7 +25,7 @@ namespace GSecobat.Api.Controllers
         [ProducesResponseType(typeof(List<MissionResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllMissions([FromQuery] MissionsRequestFilter filter)
         {
-            List<MissionResponse> response = await _missionsService.GetAllMissions(filter);
+            PagedResult<MissionResponse> response = await _missionsService.GetAllMissions(filter);
 
             return Ok(response);
         }

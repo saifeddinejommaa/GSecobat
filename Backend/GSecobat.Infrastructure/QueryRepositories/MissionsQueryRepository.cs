@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using GSecobat.Application.Features.FuelDepots.Responses;
+using GSecobat.Application.Common;
 using GSecobat.Application.Features.Missions.Repositories;
 using GSecobat.Application.Features.Missions.Requests;
 using GSecobat.Application.Features.Missions.Responses;
@@ -16,11 +16,12 @@ namespace GSocobat.Infrastructure.QueryRepositories
         {
             _dbConnection = dbConnection;
         }
-        public async Task<List<MissionResponse>> GetAllMissionsAsync(MissionsRequestFilter filter)
+        public async Task<PagedResult<MissionResponse>> GetAllMissionsAsync(MissionsRequestFilter filter)
         {
             StringBuilder sql = new(
            $"""
-            SELECT 
+            SELECT
+                COUNT(*) OVER() {nameof(MissionResponse.Total)},
                 m."Id" {nameof(MissionResponse.Id)},
                 m."MissionTypeId" {nameof(MissionResponse.MissionTypeId)},
                 m."MissionTitle" {nameof(MissionResponse.MissionTitle)},
@@ -38,10 +39,13 @@ namespace GSocobat.Infrastructure.QueryRepositories
                 LEFT JOIN "MissionConstructionSite" mcs ON mcs."MissionId" = m."Id"
                 LEFT JOIN "Location" fl ON mbt."FromLocationId" = fl."Id"
                 LEFT JOIN "Location" tl ON mbt."ToLocationId" = tl."Id"
-                LEFT JOIN "Location" ml ON mcs."LocationId" = ml."Id";
+                LEFT JOIN "Location" ml ON mcs."LocationId" = ml."Id"
+            WHERE 1=1
             """);
 
             var parameters = new DynamicParameters();
+            parameters.Add("PageSize", filter.PageSize);
+            parameters.Add("Offset", (filter.PageNumber - 1) * filter.PageSize);
 
             if (filter.MissionTypeId > 0)
             {
@@ -68,12 +72,26 @@ namespace GSocobat.Infrastructure.QueryRepositories
                 parameters.Add("Location", $"%{filter.MissionLocation}%");
             }
 
+            sql.Append(
+                """
+                 ORDER BY m."Id"
+                LIMIT @PageSize OFFSET @Offset
+                """);
+
             var result = await _dbConnection.QueryAsync<MissionResponse>(
                 sql.ToString(),
                 parameters
             );
 
-            return result.ToList();
+            int total = result.Any() ? result.ElementAt(0).Total : 0;
+
+            return new PagedResult<MissionResponse>
+            {
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalCount = total,
+                Items = result.ToList()
+            };
         }
     }
 }

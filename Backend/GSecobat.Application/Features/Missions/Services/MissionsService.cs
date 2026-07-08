@@ -1,4 +1,5 @@
-﻿using GSecobat.Application.Features.Missions.Repositories;
+﻿using GSecobat.Application.Common;
+using GSecobat.Application.Features.Missions.Repositories;
 using GSecobat.Application.Features.Missions.Requests;
 using GSecobat.Application.Features.Missions.Responses;
 
@@ -25,7 +26,7 @@ namespace GSecobat.Application.Features.Missions.Services
             await _missionRepository.AddNewMissionConstructionSite(request);
         }
 
-        public async Task<List<MissionResponse>> GetAllMissions(MissionsRequestFilter filter)
+        public async Task<PagedResult<MissionResponse>> GetAllMissions(MissionsRequestFilter filter)
         {
             return await _missionsQueryRepository.GetAllMissionsAsync(filter);
         }

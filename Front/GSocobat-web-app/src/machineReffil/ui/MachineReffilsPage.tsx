@@ -4,7 +4,7 @@ import { useMachineReffilsStore } from "./state/MachineReffilsState";
 import MachineReffilsFilters from "./MachineReffilsFilterWidget";
 
 export default function MachineReffilsPages() {
-  const { machinesReffils, fetchMachineReffils, filters, loading } = useMachineReffilsStore();
+  const { machinesReffils, fetchMachineReffils, filters } = useMachineReffilsStore();
   useEffect(() => {
     fetchMachineReffils();
   }, []);

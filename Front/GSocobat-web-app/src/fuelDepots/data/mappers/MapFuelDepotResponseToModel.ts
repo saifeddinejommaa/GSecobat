@@ -4,7 +4,7 @@ import type { FuelDepotResponse } from "../Responses/FuelDepotResponse";
 export const mapFuelDepotResponseToModel = (entity: FuelDepotResponse): FuelDepot => {
   return {
     id: entity.id,
-    depotName: entity.depotName,
+    depotName: entity.depotName??"",
     capacity: entity.capacity,
     currentLevel: entity.currentLevel,
     reference: entity.reference,

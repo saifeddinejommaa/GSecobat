@@ -1,6 +1,10 @@
-﻿using GSecobat.Application.Features.Employees.Responses;
+﻿using GSecobat.Application.Common;
+using GSecobat.Application.Features.Employees.Requests;
+using GSecobat.Application.Features.Employees.Responses;
 using GSecobat.Application.Features.Employees.Services;
+using GSecobat.Application.Features.Missions.Requests;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GSecobat.Api.Controllers
 {
@@ -15,9 +19,10 @@ namespace GSecobat.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllEmployees()
+        [ProducesResponseType(typeof(List<EmployeeResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeesRequestFilter filter)
         {
-            List<EmployeeResponse> response = await _employeeService.GetEmployees();
+            PagedResult<EmployeeResponse> response = await _employeeService.GetEmployees(filter);
 
             return Ok(response);
         }

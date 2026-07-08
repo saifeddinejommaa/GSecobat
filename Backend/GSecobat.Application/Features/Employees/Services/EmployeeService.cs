@@ -1,4 +1,6 @@
+using GSecobat.Application.Common;
 using GSecobat.Application.Employees;
+using GSecobat.Application.Features.Employees.Requests;
 using GSecobat.Application.Features.Employees.Responses;
 using GSecobat.Domain.Entities;
 
@@ -6,11 +8,15 @@ namespace GSecobat.Application.Features.Employees.Services
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly IEmployeesQueryRepository _employeeQueryRepository;
+
         private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeService(IEmployeeRepository employeeRepository)
+
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeesQueryRepository employeeQueryRepository)
         {
             _employeeRepository = employeeRepository;
+            _employeeQueryRepository = employeeQueryRepository;
         }
 
         public async Task<EmployeeResponse> GetEmployeeById(int id)
@@ -20,13 +26,11 @@ namespace GSecobat.Application.Features.Employees.Services
             return employee.ToEmployeeResponse();
         }
 
-        public async Task<List<EmployeeResponse>> GetEmployees()
+        public async Task<PagedResult<EmployeeResponse>> GetEmployees(EmployeesRequestFilter filter)
         {
-            IEnumerable<Employee> employeesResult = await _employeeRepository.GetAllAsync();
-            List<EmployeeResponse> result = employeesResult.Select(e => e.ToEmployeeResponse())
-                                                    .ToList();
-
-            return result;
+            PagedResult<EmployeeResponse> employeesResult = await _employeeQueryRepository.GetAllEmployeesAsync(filter);
+       
+            return employeesResult;
         }
     }
 }

@@ -15,9 +15,9 @@ export function useMachineAutocomplete(serialNmber:string) {
 
     const timeout = setTimeout(async () => {
       setLoading(true);
-      const data = await GetAssetsUseCase({serialNumber:serialNmber});
+      const data = await GetAssetsUseCase({pageNumber:1, pageSize:10,serialNumber:serialNmber});
        console.log("data",data)
-      setResults(data);
+      setResults(data.items);
       setLoading(false);
     }, 300);
 

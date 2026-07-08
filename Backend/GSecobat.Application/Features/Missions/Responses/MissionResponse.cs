@@ -15,5 +15,6 @@
         public string? MissionDesc { get; set; }
         public string? FromAddress { get; set; }
         public string? ToAddress { get; set; }
+        public int Total { get; set; }
     }
 }

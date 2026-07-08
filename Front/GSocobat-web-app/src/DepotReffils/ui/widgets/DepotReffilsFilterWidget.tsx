@@ -7,9 +7,8 @@ type Props = {
 
 export default function DepotReffilsFilters({ onApply}: Props) {
   const [filters, setFilters] = useState<DepotReffilRequestFilter>({
-    fuelDepotRef : null,
-    reffilDate : null,
-    fuelDepotId : null
+   pageNumber : 1,
+   pageSize : 10
   });
 
   const handleChange = <K extends keyof DepotReffilRequestFilter>(

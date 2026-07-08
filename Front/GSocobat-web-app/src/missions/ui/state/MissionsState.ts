@@ -2,9 +2,10 @@ import { create } from "zustand";
 import type { Mission } from "../../domain/models/Mission";
 import type { MissionRequestFilter } from "../../domain/models/MissionsRequestFIlter";
 import { GetMissionsUseCase } from "../../domain/useCases/GetMissionsUseCase";
+import type { PagedResult } from "../../../core/PagedResult";
 
 type MissionsState = {
-  missions: Mission[];
+  missions: PagedResult<Mission>;
   loading: boolean;
   filters: MissionRequestFilter;
 
@@ -14,9 +15,12 @@ type MissionsState = {
 };
 
 export const useMissionsStore = create<MissionsState>((set, get) => ({
-  missions: [],
+  missions: { items: [], pageNumber: 0, pageSize: 10, totalCount: 0 },
   loading: false,
-  filters: {},
+   filters: {
+        pageNumber: 1,
+        pageSize: 10
+    },
   setFilter: (key, value) =>
     set((state) => ({
       filters: {
@@ -25,7 +29,10 @@ export const useMissionsStore = create<MissionsState>((set, get) => ({
       },
     })),
 
-  clearFilters: () => set({ filters: {} }),
+  clearFilters: () => set({ filters: {
+            pageNumber: 1,
+            pageSize: 10
+        } }),
 
   fetchMissions: async () => {
     set({ loading: true });

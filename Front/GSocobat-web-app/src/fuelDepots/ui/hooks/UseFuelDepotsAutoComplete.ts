@@ -17,7 +17,7 @@ export function useFuelDepotAutocomplete(serialNumber:string) {
       setLoading(true);
       const data = await GetFuelDepotsUseCase({serialNumber:serialNumber});
        console.log("data",data)
-      setResults(data);
+      setResults(data.items);
       setLoading(false);
     }, 300);
 

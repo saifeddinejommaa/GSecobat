@@ -1,22 +1,32 @@
-import { useEffect, useState } from "react";
-import OrdersTable from "../../components/tables/OrdersTable";
+import { useEffect } from "react";
 import { useEmployeeStore } from "./states/EmployeesState";
-import { Modal } from "../../common/Widgets/Modal";
-import type { Employee } from "../domain/models/Employee";
+import OrdersTable from "../../components/tables/OrdersTable";
 
 export default function EmployeesPages() {
-  const { employees, fetchEmployees, loading } = useEmployeeStore();
+  const { employees, fetchEmployees, loading, filters } = useEmployeeStore();
   useEffect(() => {
     fetchEmployees();
   }, []);
 
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee| null>(null);
+  const handlePageChange = (page: number) => {
+    useEmployeeStore.setState((state) => ({
+      filters: {
+        ...state.filters,
+        pageNumber: page,
+      },
+    }));
+
+    fetchEmployees();
+  };
 
   return (
     <div className="glass-card">
-      <OrdersTable
-        onRowClick={(item) => setSelectedEmployee(item)}
-        data={employees}
+      {<OrdersTable
+        data={employees?.items ?? []}
+        pageNumber={filters.pageNumber}
+        pageSize={filters.pageSize}
+        totalCount={employees?.totalCount ?? 0}
+        onPageChange={handlePageChange}
         columns={[
           { key: "firstName", label: "Nom" },
           { key: "lastName", label: "Prénom" },
@@ -27,20 +37,7 @@ export default function EmployeesPages() {
                 : "-",
           },
         ]}
-      />
-      <Modal
-        open={!!selectedEmployee}
-        onClose={() => setSelectedEmployee(null)}
-      >
-        {selectedEmployee && (
-          <div>
-            <h2>{selectedEmployee.firstName}</h2>
-            <p><b>Prénom:</b> {selectedEmployee.firstName}</p>
-            <p><b>Nom:</b> {selectedEmployee.lastName}</p>
-            <p><b>Date:</b> {new Date(selectedEmployee.birthDate).toLocaleDateString()}</p>
-          </div>
-        )}
-      </Modal>
+      />}
     </div>
   );
 }

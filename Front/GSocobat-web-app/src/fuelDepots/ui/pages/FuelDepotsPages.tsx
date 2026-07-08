@@ -4,7 +4,7 @@ import { useDepotsStore } from "../state/FuelDepotsState";
 import FuelDepotFilters from "../widgets/fuelDepotFilterWidget";
 
 export default function FuelDepotsPages() {
-  const { depots, fetchDepots,filters, loading } = useDepotsStore();
+  const { depots, fetchDepots,filters } = useDepotsStore();
   useEffect(() => {
     fetchDepots();
   }, []);

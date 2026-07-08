@@ -1,14 +1,24 @@
 import { useEffect } from "react";
-import OrdersTable from "../../../components/tables/OrdersTable";
+//import OrdersTable from "../../../components/tables/OrdersTable";
 import { useMissionsStore } from "../state/MissionsState";
 import MissionsFiltersWidget from "./MissionsFiltersWidget";
+import OrdersTable from "../../../components/tables/OrdersTable";
 
 export default function MissionsPage() {
-  const { missions, fetchMissions, loading } = useMissionsStore();
+  const { missions, fetchMissions, loading,filters } = useMissionsStore();
   useEffect(() => {
     fetchMissions();
   }, []);
-  
+   const handlePageChange = (page: number) => {
+        useMissionsStore.setState((state) => ({
+          filters: {
+            ...state.filters,
+            pageNumber: page,
+          },
+        }));
+    
+        fetchMissions();
+      };
   return (
     <div className="glass-card">
       <MissionsFiltersWidget onApply={(filters:any) => {
@@ -16,7 +26,11 @@ export default function MissionsPage() {
     fetchMissions();
   }}  />
      <OrdersTable
-  data={missions}
+  data={missions?.items ?? []}
+  pageNumber={filters.pageNumber}
+        pageSize={filters.pageSize}
+        totalCount={missions?.totalCount ?? 0}
+  onPageChange={handlePageChange}
   columns={[
     { key: "employeeName", label: "Nom Employee" },
     { key: "distance", label: "Distance" },
@@ -24,7 +38,7 @@ export default function MissionsPage() {
     { key: "missionTitle", label: "Titre" },
     { key: "missionDesc", label: "Description"},
   ]}
-/>
+/> 
     </div>
   );
 }

@@ -4,7 +4,7 @@ import OrdersTable from "../../../components/tables/OrdersTable";
 import DepotReffilsFilters from "../widgets/DepotReffilsFilterWidget";
 
 export default function DepotReffilsPages() {
-  const { DepotReffils, fetchDepotReffils, filters, loading } = useDepotReffilsStore();
+  const { DepotReffils, fetchDepotReffils, filters } = useDepotReffilsStore();
   useEffect(() => {
     fetchDepotReffils();
   }, []);

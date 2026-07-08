@@ -1,6 +1,8 @@
-﻿namespace GSecobat.Application.Features.Missions.Requests
+﻿using GSecobat.Application.Common;
+
+namespace GSecobat.Application.Features.Missions.Requests
 {
-    public class MissionsRequestFilter
+    public class MissionsRequestFilter : PagedRequest
     {
         public int MissionTypeId { get; set; }
         public string? EmployeeName { get; set; }
