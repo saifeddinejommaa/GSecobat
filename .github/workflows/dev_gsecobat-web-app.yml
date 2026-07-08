@@ -11,7 +11,7 @@ on:
 
 
 env:
-  WORKING_DIRECTORY: Front/Gsecobat-web-app
+  WORKING_DIRECTORY: Front/GSocobat-web-app
   
 jobs:
   build:
