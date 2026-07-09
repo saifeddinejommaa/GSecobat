@@ -60,6 +60,10 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_71C02DE09A2447EA9242585C12E018BC }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CC95049FF77D468DA78A3DB6F4F8E109 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8938C9F88FBF4424875F07E650975604 }}
+      
+      - name: Check artifact content
+        run: |
+            ls -la dist
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -67,5 +71,5 @@ jobs:
         with:
           app-name: 'GSecobat-web-app'
           slot-name: 'Production'
-          package: dist
+          package: ./dist
           
