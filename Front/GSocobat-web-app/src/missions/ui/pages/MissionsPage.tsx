@@ -5,7 +5,7 @@ import MissionsFiltersWidget from "./MissionsFiltersWidget";
 import OrdersTable from "../../../components/tables/OrdersTable";
 
 export default function MissionsPage() {
-  const { missions, fetchMissions, loading,filters } = useMissionsStore();
+  const { missions, fetchMissions,filters } = useMissionsStore();
   useEffect(() => {
     fetchMissions();
   }, []);

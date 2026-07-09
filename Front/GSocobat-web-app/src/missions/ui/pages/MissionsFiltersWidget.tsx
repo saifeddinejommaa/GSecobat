@@ -6,6 +6,8 @@ export default function MissionsFiltersWidget({ onApply }: any) {
   const [filters, setFilters] = useState<MissionRequestFilter>({
     EmployeeName: "",
     missionTypeId: undefined,
+    pageNumber:1,
+    pageSize: 10
   });
 
   const handleChange = (key: string, value: string) => {

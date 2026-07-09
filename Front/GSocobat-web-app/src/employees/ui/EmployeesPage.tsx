@@ -3,7 +3,7 @@ import { useEmployeeStore } from "./states/EmployeesState";
 import OrdersTable from "../../components/tables/OrdersTable";
 
 export default function EmployeesPages() {
-  const { employees, fetchEmployees, loading, filters } = useEmployeeStore();
+  const { employees, fetchEmployees, filters } = useEmployeeStore();
   useEffect(() => {
     fetchEmployees();
   }, []);
