@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://gsecobat-api.wittybay-d01acdae.francecentral.azurecontainerapps.io/api/";
+export const API_BASE_URL = "http://localhost:5006/api/";
